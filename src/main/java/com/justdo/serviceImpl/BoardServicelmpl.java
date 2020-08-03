@@ -61,7 +61,7 @@ public class BoardServicelmpl implements BoardService{
 	
 	//상세보기
 	@Override
-	public BoardVO get(Long bno) {
+	public BoardVO get(int bno) {
 		log.info("get......" + bno);
 		return mapper.read(bno);
 	}

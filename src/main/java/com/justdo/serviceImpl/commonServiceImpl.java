@@ -36,11 +36,6 @@ public class commonServiceImpl implements commonService {
 		return mapper.login(vo);
 	}
 	
-	@Override
-	public BoardVO read(int bno) {
-		// TODO Auto-generated method stub
-		return mapper.selectBoard(bno);
-	}
 
 	@Override
 	public int likeBoard(int bno) {
@@ -363,7 +358,7 @@ public class commonServiceImpl implements commonService {
         return weatherData;
 	}
 	
-	//문화정보 받아오기 ////////////////////////////////
+	//문화정보 받아오기
 	@SuppressWarnings("deprecation")
 	@Override
 	public String[] getCulture() throws IOException {
@@ -403,9 +398,9 @@ public class commonServiceImpl implements commonService {
 		return culutreInfo;
         
 	}
-	//문화 정보 받아오기//
 
-	//새소식 받아오기 /////////////////////////
+
+	//새소식 받아오기
 	@SuppressWarnings("deprecation")
 	@Override
 	public JsonArray getNews() throws IOException {
@@ -441,7 +436,7 @@ public class commonServiceImpl implements commonService {
 
 		return parseItems;
 	}
-	//새소식 받아오기//
+
 	
 	//이메일로 회원 아이디 찾기
 	@Override

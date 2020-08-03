@@ -9,9 +9,7 @@
 		where userid= #{userid} and userpw =#{userpw}
 	</select>
 	
-	<select id="selectBoard" resultType="com.justdo.domain.BoardVO">
-select b.bno, b.userid, b.content, b.REGDATE, b.UPDATEDATE, b.REPLY_COUNT, b.CATEGORY, b.LIKE_COUNT, b.UNLIKE_COUNT, b.LOCATION, b.VIEW_COUNT, m.NICKNAME from TBL_BOARD b,TBL_MEMBER m where bno = #{bno} and b.userid = m.userid
-	</select>
+
 	
 	<!-- tbl_member테이블에 가입정보 insert -->
 	<insert id="insertUser">

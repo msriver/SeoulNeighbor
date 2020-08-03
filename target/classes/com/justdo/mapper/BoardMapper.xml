@@ -78,8 +78,12 @@
 
 	<!-- 조회 -->
 	<select id="read" resultType="com.justdo.domain.BoardVO">
-		select * from TBL_BOARD where bno = #{bno}
+		select b.bno, b.userid, b.content, b.REGDATE, b.UPDATEDATE, b.REPLY_COUNT,
+		b.CATEGORY, b.LIKE_COUNT, b.UNLIKE_COUNT, b.LOCATION, b.VIEW_COUNT,
+		m.NICKNAME from TBL_BOARD b,TBL_MEMBER m where bno = #{bno} and
+		b.userid = m.userid
 	</select>
+	
 	
 	<!-- 삭제 -->
 	<delete id="delete">

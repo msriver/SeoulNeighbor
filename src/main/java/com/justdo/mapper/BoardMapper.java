@@ -27,7 +27,7 @@ public interface BoardMapper {
 	public void insert(BoardVO board);
 	
 	//조회
-	public BoardVO read(Long bno);
+	public BoardVO read(int bno);
 	
 	//삭제
 	public int delete(Long bno);

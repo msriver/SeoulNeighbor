@@ -20,7 +20,7 @@ public interface BoardService {
 	public void register(BoardVO board);
 	
 	//상세보기
-	public BoardVO get(Long bno);
+	public BoardVO get(int bno);
 	
 	//수정
 	public boolean modify(BoardVO board);
