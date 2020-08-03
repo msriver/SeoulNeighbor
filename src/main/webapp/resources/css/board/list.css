@@ -1,0 +1,103 @@
+.table {
+	font-size: 70%;
+	white-space: nowrap;
+}
+
+.collapsing-parallax {
+	height: 350px;
+	width: 100%;
+	background: url("/resources/img/common/list_background.png")
+		center center no-repeat;
+	background-color: rgb(33,14,61);
+	background-size: cover;
+	z-index: 99;
+}
+
+.navbar-default{
+ background-color: rgba(255,255,255,0) !important;
+ transition: 1s;
+}
+.cardview{
+	box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.18),
+		0px 4px 14px 0px rgba(0, 0, 0, 0.15);
+}
+
+/*게시글 리스트 */
+.panel-heading{
+	font-family:"Ridi";
+}
+
+.tab-content thead{
+	font-family:"ImcreSoojin";
+	font-size:0.9rem;
+}
+
+tbody{
+	font-family:"SC";
+	font-size:0.8rem;
+}
+
+.userNickname{
+	cursor:pointer;
+}
+
+.sendMessageToUser{
+	cursor:pointer;
+}
+
+/* 서울 소식 */
+#seoulNews{
+	height:100px;
+	overflow:hidden;
+	line-height:50px;
+	border: outset 1px #dee2e6;
+	border-radius:5px;
+	padding:10px;
+	margin-bottom:10px;
+}
+
+#seoulNews h5{
+	font-family: 'Mapo';
+}
+
+#seoulNews p{
+	font-family:"IBM";
+	margin:0;
+}
+
+#seoulNews div{
+	width:100%;
+}
+
+.newsDiv{
+	overflow:hidden;
+	border-radius:5px;
+	background-color:#edf2ff;
+}
+
+.newsDiv p{
+	cursor:pointer;
+}
+
+/* 서울 문화 */
+#seoulCulture{
+	border: outset 1px #dee2e6;
+	border-radius:5px;
+	padding:10px;
+	font-family:"IBM";
+}
+
+#seoulCulture h5{
+	font-family: 'Mapo';
+}
+
+/* 반응형 */
+@media screen and (max-width: 968px) {
+	#seoulCulture{
+		order:1;
+		margin-bottom:10px;
+	}
+	#listLeft{
+		order:2;
+	}
+}

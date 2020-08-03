@@ -1,0 +1,30 @@
+{
+"DESCRIPTION" : {"LAT":"위도","ESRI_PK":"ESRI_PK","SIG_KOR_NM":"시군구명_한글","SIG_CD":"시군구코드","SIG_ENG_NM":"시군구명_영문","LNG":"경도","OBJECTID":"순번"},
+"DATA" : [
+{"esri_pk":0,"sig_eng_nm":"Dobong-gu","lng":"127.047021","sig_cd":"11320","sig_kor_nm":"도봉구","objectid":1,"lat":"37.668908"},
+{"esri_pk":1,"sig_eng_nm":"Eunpyeong-gu","lng":"126.929132","sig_cd":"11380","sig_kor_nm":"은평구","objectid":2,"lat":"37.602773"},
+{"esri_pk":2,"sig_eng_nm":"Dongdaemun-gu","lng":"127.039721","sig_cd":"11230","sig_kor_nm":"동대문구","objectid":3,"lat":"37.574424"},
+{"esri_pk":3,"sig_eng_nm":"Dongjak-gu","lng":"126.939467","sig_cd":"11590","sig_kor_nm":"동작구","objectid":4,"lat":"37.512370"},
+{"esri_pk":4,"sig_eng_nm":"Geumcheon-gu","lng":"126.895397","sig_cd":"11545","sig_kor_nm":"금천구","objectid":5,"lat":"37.456899"},
+{"esri_pk":5,"sig_eng_nm":"Guro-gu","lng":"126.887446","sig_cd":"11530","sig_kor_nm":"구로구","objectid":6,"lat":"37.495453"},
+{"esri_pk":6,"sig_eng_nm":"Jongno-gu","lng":"126.979532","sig_cd":"11110","sig_kor_nm":"종로구","objectid":7,"lat":"37.573161"},
+{"esri_pk":7,"sig_eng_nm":"Gangbuk-gu","lng":"127.025516","sig_cd":"11305","sig_kor_nm":"강북구","objectid":8,"lat":"37.639759"},
+{"esri_pk":8,"sig_eng_nm":"Jungnang-gu","lng":"127.092624","sig_cd":"11260","sig_kor_nm":"중랑구","objectid":9,"lat":"37.606526"},
+{"esri_pk":9,"sig_eng_nm":"Gangnam-gu","lng":"127.047371","sig_cd":"11680","sig_kor_nm":"강남구","objectid":10,"lat":"37.517248"},
+{"esri_pk":10,"sig_eng_nm":"Gangseo-gu","lng":"126.849482","sig_cd":"11500","sig_kor_nm":"강서구","objectid":11,"lat":"37.550823"},
+{"esri_pk":11,"sig_eng_nm":"Jung-gu","lng":"126.997548","sig_cd":"11140","sig_kor_nm":"중구","objectid":12,"lat":"37.563733"},
+{"esri_pk":12,"sig_eng_nm":"Gangdong-gu","lng":"127.123795","sig_cd":"11740","sig_kor_nm":"강동구","objectid":13,"lat":"37.530129"},
+{"esri_pk":13,"sig_eng_nm":"Gwangjin-gu","lng":"127.082366","sig_cd":"11215","sig_kor_nm":"광진구","objectid":14,"lat":"37.538499"},
+{"esri_pk":14,"sig_eng_nm":"Mapo-gu","lng":"126.901612","sig_cd":"11440","sig_kor_nm":"마포구","objectid":15,"lat":"37.566116"},
+{"esri_pk":16,"sig_eng_nm":"Seocho-gu","lng":"127.032658","sig_cd":"11650","sig_kor_nm":"서초구","objectid":16,"lat":"37.483541"},
+{"esri_pk":17,"sig_eng_nm":"Seongbuk-gu","lng":"127.016732","sig_cd":"11290","sig_kor_nm":"성북구","objectid":17,"lat":"37.589349"},
+{"esri_pk":18,"sig_eng_nm":"Nowon-gu","lng":"127.056273","sig_cd":"11350","sig_kor_nm":"노원구","objectid":18,"lat":"37.654073"},
+{"esri_pk":19,"sig_eng_nm":"Songpa-gu","lng":"127.105915","sig_cd":"11710","sig_kor_nm":"송파구","objectid":19,"lat":"37.514408"},
+{"esri_pk":21,"sig_eng_nm":"Seodaemun-gu","lng":"126.936771","sig_cd":"11410","sig_kor_nm":"서대문구","objectid":20,"lat":"37.579139"},
+{"esri_pk":22,"sig_eng_nm":"Yangcheon-gu","lng":"126.866639","sig_cd":"11470","sig_kor_nm":"양천구","objectid":21,"lat":"37.517002"},
+{"esri_pk":23,"sig_eng_nm":"Yeongdeungpo-gu","lng":"126.896255","sig_cd":"11560","sig_kor_nm":"영등포구","objectid":22,"lat":"37.526339"},
+{"esri_pk":15,"sig_eng_nm":"Gwanak-gu","lng":"126.951481","sig_cd":"11620","sig_kor_nm":"관악구","objectid":23,"lat":"37.478094"},
+{"esri_pk":20,"sig_eng_nm":"Seongdong-gu","lng":"127.036962","sig_cd":"11200","sig_kor_nm":"성동구","objectid":24,"lat":"37.563435"},
+{"esri_pk":24,"sig_eng_nm":"Yongsan-gu","lng":"126.990236","sig_cd":"11170","sig_kor_nm":"용산구","objectid":25,"lat":"37.532445"}
+]
+}

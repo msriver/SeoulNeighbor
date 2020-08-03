@@ -1,0 +1,112 @@
+
+
+.sidebar {
+  height: 30vh;
+  font-size: 0.65em;
+}
+
+.nav {
+  position: relative;
+  margin: 0 15%;
+  text-align: right;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+}
+
+/* 좌측 프로필 사진 //////////////////////////////////////*/
+.leftnav-photo {
+	width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+#profileImg img{
+	width:150px;
+	margin:0 auto;
+}
+/* 좌측 프로필 사진 */
+
+
+#hello{
+	font-size:1.1rem;
+}
+
+#leftNav{
+	padding:0;
+	width:auto;
+	z-index:1;
+}
+
+#leftNav a{
+	color:#666666 !important;
+}
+
+#leftNav a:hover{
+	color:#827FFE !important;
+}
+
+#leftNav a:active{
+	color:#827FFE !important;
+}
+
+#leftNavContainer{
+	border-right:solid 1px #E6E6E6;
+	height: auto;
+	width: 300px;
+	margin:0 auto;
+	background-color:white;
+	z-index:100;
+}
+
+#profileImg {
+	margin-top:20px;
+	border:none;
+}
+
+#leftNavBar{
+	margin-top:20px;	
+}
+
+#leftNavBar li{
+	border-bottom:solid 1px #E6E6E6;
+}
+
+#leftNavBar ul{
+	border-top:solid 1px #E6E6E6;
+}
+
+#leftNavBar ul a{
+	line-height: 30px !important;
+}
+
+#dropDownBtn{
+	display:none;
+	position:fixed;
+	top:150px;
+	width:25px;
+	height:50px;
+	z-index:100;
+}
+
+#changeProfilePictureBtn{
+	width:150px;
+	height:150px;
+	background:rgba(0,0,0,0.7);
+	color:white;
+	border:none;
+	border-radius:70% !important;
+	margin-top:-105px;
+	line-height:230px;
+}
+
+/* input border focus 변경 **************************/
+textarea:focus, input:focus, .form-control:focus, input[type]:focus, .uneditable-input:focus {
+    border-color: #827FFE;
+    box-shadow: 0 1px 1px #827FFE inset, 0 0 8px #827FFE;
+    outline: 0 none;
+}
+/* input border focus 변경 */
+

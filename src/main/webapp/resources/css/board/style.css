@@ -1,0 +1,69 @@
+/* styles */
+
+#left_side {
+	position: relative;
+	margin: 100px 0px;
+}
+.board_notice {
+	font-size: 13px;
+	color: red;
+	text-align:center;
+}
+#gu_notice {
+	display: block;
+}
+#dong_notice {
+	display: none;
+}
+#name_choice{
+	position: relative;
+	float: left;
+	width: 100%;
+	margin-bottom: 20px;
+}
+#selectGu{
+	float:left;
+	position: relative;
+	width:48%;
+	margin: 0px 1%;
+}
+#selectDong{
+	float: left;
+	position: relative;
+	width: 48%;
+	margin: 0px 1%;
+}
+.dropdown-menu{
+	max-height: 200px;
+  	overflow-y: auto;
+}
+.bottomButton{
+	margin: 5px;
+	float: right;
+}
+.map_wrap {
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 250px !important;
+	margin-top: 10px;
+}
+#category_wrap{
+	position: relative;
+	margin: 30px 10px 10px 10px;
+}
+#title{
+	position: relative;
+	margin: 10px 0px;
+	padding-left: 10px;
+	width: 50%;
+}
+#content{
+	position: relative;
+	margin: 10px;
+}
+@media ( max-width: 767px ) {
+	#left_side {
+	margin: 50px 0px;
+	}
+}

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.justdo.mapper.BoardMapper">
+	
+	<!-- 검색 기능 및 카테고리 정보에 따라 기존 구문에 추가되어 정보 불러옴 -->
+	<sql id="criteria">
+		<if test="type != null">
+			<if test="type == 'T'.toString()">and title LIKE CONCAT('%',#{keyword},'%')</if>
+			<if test="type == 'C'.toString()">and content LIKE CONCAT('%',#{keyword},'%')</if>
+			<if test="type == 'N'.toString()">and nickname LIKE CONCAT('%',#{keyword},'%')</if>
+			<if test="type == 'L'.toString()">and location LIKE CONCAT('%',#{keyword},'%')</if>
+			<if test="type == 'A'.toString()">and nickname LIKE CONCAT('%',#{keyword},'%') or content LIKE CONCAT('%',#{keyword},'%') or title LIKE CONCAT('%',#{keyword},'%')</if>
+		</if>
+		<if test="category == category">
+			<if test="category == null or (category eq '전체'.toString())">and category LIKE CONCAT('%','','%')</if>
+			<if test="category != null and (category != '전체'.toString())">and category LIKE CONCAT('%',#{category},'%')</if>
+		</if>
+	</sql>
+	<!-- 검색 기능 및 카테고리 정보에 따라 기존 구문에 추가되어 정보 불러옴 (end) -->
+	
+	<!-- 추천 및 인기글  목록 -->
+	<select id="getLocationList" resultType="com.justdo.domain.BoardVO">
+		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+		from TBL_BOARD where location like concat('%',#{gu},'%') order by like_count desc limit 0,6)
+		UNION ALL
+		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+		from TBL_BOARD where location like concat('%',#{gu},'%') order by reply_count desc limit 0,6)
+		UNION ALL
+		(select substring_index(location,'_',1) as location, bno, title, reply_count,like_count 
+		from TBL_BOARD order by reply_count desc limit 0,7);
+	</select>
+	<!-- 추천 및 인기글  목록 (end) -->
+	
+	<!-- 하단 메인 게시글 목록 -->
+	<select id="getListWithPaging" resultType="com.justdo.domain.BoardVO">
+		select bno,userid,title,content,regdate,updatedate,reply_count,category,like_count,unlike_count,substring_index(location,'_',-1) as location,view_count,nickname from TBL_BOARD
+		where (location LIKE CONCAT('%',#{gu},'%'))
+		order by bno desc
+		limit #{startIndex}, #{amount}
+	</select>
+	<!-- 하단 메인 게시글 목록 (end) -->
+	
+	<!-- 카테고리별 탭 게시글목록 -->
+	<select id="getListWithPagingTabs" resultType="com.justdo.domain.BoardVO">
+		select bno,userid,title,content,regdate,updatedate,reply_count,category,like_count,unlike_count,substring_index(location,'_',-1) as location,view_count,nickname from TBL_BOARD
+		where (location LIKE CONCAT('%',#{gu},'%'))
+		<include refid="criteria"></include>
+		order by bno desc
+		limit #{startIndex}, #{amount}
+	</select>
+	<!-- 카테고리별 탭 게시글목록 (end) -->
+
+
+	<!-- 페이징 시 필요한 글의갯수를 구하는 쿼리문 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from TBL_BOARD 
+		where (location LIKE CONCAT('%',#{gu},'%'))
+		<include refid="criteria"></include>
+	</select>
+	<!-- 페이징 시 필요한 글의갯수를 구하는 쿼리문 (end) -->
+	
+
+	
+	<!-- 목록 -->
+	<select id="getList" resultType="com.justdo.domain.BoardVO">
+		<![CDATA[
+			select * from TBL_BOARD where bno > 0
+		]]>
+	</select>
+	
+	<!-- 입력 -->
+	<insert id="insert">
+		insert into TBL_BOARD (userid,nickname, title, content, regdate, category, location )
+		values (#{userid},#{nickname}, #{title}, #{content}, sysdate(), #{category}, #{location})
+	</insert>
+
+	<!-- 조회 -->
+	<select id="read" resultType="com.justdo.domain.BoardVO">
+		select * from TBL_BOARD where bno = #{bno}
+	</select>
+	
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete from TBL_BOARD where bno = #{bno}
+	</delete>
+	
+	<!-- 수정 -->
+	<update id="update">
+		update TBL_BOARD set title= #{title}, content= #{content}, updatedate= sysdate(), category= #{category}, location= #{location}
+		where bno = #{bno}
+	</update>
+	
+	<!-- 좋아요 추가 -->
+	<update id="like" >
+		UPDATE TBL_BOARD
+		SET LIKE_COUNT = LIKE_COUNT+1
+		where bno=#{bno}
+	</update>
+
+	<!-- 좋아요 개수 가져오기 -->
+   <select id="selectLikeCount" resultType="int">
+      select LIKE_COUNT from TBL_BOARD where bno = #{bno}
+   </select>
+
+	<!-- 싫어요 추기 -->
+	<update id="unlike">
+		UPDATE TBL_BOARD
+		SET UNLIKE_COUNT = UNLIKE_COUNT+1
+		where bno=#{bno}
+	</update>
+
+	<!--  싫어요 개수 가져오기 -->
+   <select id="selectUnlikeCount" resultType="int">
+      select UNLIKE_COUNT from TBL_BOARD where bno = #{bno}
+   </select> 
+   
+   <!-- 조회수 증가 -->
+   <update id="updateViewCount">
+		update tbl_board set view_count = view_count + 1 where bno = #{bno}
+   </update>
+   
+   <!-- 글쓴이 프로필 사진 가져오기 -->
+   <select id="selectWriterProfile" resultType="String">
+   select member_filename from TBL_MEMBER where nickname = #{nickname};
+   </select>
+   
+   <!-- 글 신고 -->
+   <insert id="reportBoard">
+		insert into TBL_REPORT (userid,rp_content,rp_type,rp_group,rp_target) values(#{userid},#{rp_content},#{rp_type},#{rp_group},#{rp_target})
+   </insert>
+   
+   <!-- 상세보기 인기글 -->
+   <select id="selectHotListFromRead" resultType="com.justdo.domain.BoardVO">
+   		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+		from TBL_BOARD where location like concat('%',#{gu},'%') order by like_count desc limit 0,3)
+		UNION ALL
+		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+		from TBL_BOARD where location like concat('%',#{gu},'%') order by reply_count desc limit 0,3)
+   </select>
+   
+   <!-- 좋아요 테이블 추가 -->
+   <insert id="insertLike">
+		insert into TBL_LIKE(bno,userid,type) values(#{bno},#{userid},#{type})
+   </insert>
+   
+   <!-- 좋아요 눌렀는지 확인 -->
+   <select id="likeCheck" resultType = "String">
+		select type from TBL_LIKE where userid = #{userid} and bno = #{bno}
+   </select>
+   
+   <!-- 좋아요 취소 -->
+   <delete id="cancelLike">
+		delete from TBL_LIKE where userid = #{userid} and bno = #{bno}
+   </delete>
+   
+   <!-- 좋아요 감소 -->
+   <update id="downLike">
+		update TBL_BOARD set like_count = like_count - 1 where bno = #{bno}
+   </update>
+   
+   <!-- 싫어요 감소 -->
+   <update id="downUnLike">
+		update TBL_BOARD set unlike_count = unlike_count - 1 where bno = #{bno}
+   </update>
+   
+	
+</mapper>

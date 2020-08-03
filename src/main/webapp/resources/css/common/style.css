@@ -1,0 +1,84 @@
+/*font */
+@font-face { font-family: 'IBM'; src: url("/resources/font/IBMPlexSansKR-Medium.otf"); }
+@font-face { font-family: 'Mapo'; src: url("/resources/font/MapoGoldenPier.otf"); }
+@font-face { font-family: 'Nexon1'; src: url("/resources/font/NEXON Lv1 Gothic OTF.otf"); }
+@font-face { font-family: 'Nexon2'; src: url("/resources/font/NEXON Lv2 Gothic OTF Medium.otf"); }
+@font-face { font-family: 'Paybook'; src: url("/resources/font/paybooc OTF Medium.otf"); }
+@font-face { font-family: 'RIDI'; src: url("/resources/font/RIDIBatang.otf"); }
+@font-face { font-family: 'SC'; src: url("/resources/font/SCDream4.otf"); }
+@font-face { font-family: 'ImcreSoojin'; src: url("/resources/font/ImcreSoojin OTF.otf"); font-weight: normal; font-style: normal; }
+
+/* styles */
+
+.map_wrap {
+	position:relative;
+	width:100%;
+	height:300px;
+	}
+.title {
+	font-weight:bold;
+	display:block;
+	}
+.hAddr {
+	position:absolute;
+	left:10px;
+	top:10px;
+	border-radius: 2px;
+	background:#fff;
+	background:rgba(255,255,255,0.8);
+	z-index:1;
+	padding:5px;
+	font-size: small;
+	}
+#centerAddr {
+	display:block;
+	margin-top:2px;
+	font-weight: normal;
+	}
+.bAddr {
+	padding:5px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	}
+	
+.navbar-nav{
+	font-family: 'IBM';
+}
+.navbar-brand{
+	z-index:10;	
+}
+
+.modal-header{
+	font-family: 'Nexon2';
+}
+
+.modal-body{
+	font-family: 'Nexon2';
+}
+/* 상단 메시지 디자인 *********************************/
+.dropdown a{
+	cursor:pointer;
+}
+
+#subMessageDiv{
+	left:-3vw;
+	top:52px;
+}
+
+/* 상단 메시지 디자인 */
+
+/* 날씨 디자인 */
+.weatherContent{
+	position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin:0 auto;
+}
+
+@media screen and (max-width:968px){
+	#guWeatherText{
+		display:none;
+	}
+}

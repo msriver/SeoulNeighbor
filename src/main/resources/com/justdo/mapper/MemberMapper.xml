@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.justdo.mapper.MemberMapper">
+	<resultMap type="com.justdo.domain.MemberVO" id="memberMap">
+		<id property="userid" column="userid"/>
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="nickname" column="nickname"/>
+		<result property="email" column="email"/>
+		<result property="member_location" column="member_location"/>
+		<result property="member_filename" column="member_filename"/>
+		<collection property="authList" resultMap="authMap"></collection>		
+	</resultMap>
+	
+	<resultMap type="com.justdo.domain.AuthVO" id="authMap">
+		<result property="userid" column="userid"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	<select id="read_auth" resultMap="memberMap">
+		select mem.userid, userpw, nickname, email, member_location, member_filename, auth
+		from TBL_MEMBER mem left outer join TBL_MEMBER_AUTH auth on mem.userid=auth.userid
+		where mem.userid=#{userid}
+	</select>
+	
+	<select id="read_userinfo" resultMap="memberMap">
+		select mem.userid, userpw, nickname, email, member_location, member_filename, auth
+		from TBL_MEMBER mem left outer join TBL_MEMBER_AUTH auth on mem.userid=auth.userid
+		where mem.email=#{email}
+	</select>
+</mapper>
