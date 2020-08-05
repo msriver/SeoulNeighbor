@@ -36,7 +36,7 @@ public class MyPageController {
 	private myPageService myPageService;
 	private BCryptPasswordEncoder pwdEncoder;
 	
-	// 나의 게시글 불러오기
+	// 나의 게시글 불러오기 ///////////////////////////////////////////
 	@GetMapping("mylist")
 	public String myList(Model model,MemberVO vo,Principal principal) {
 		if (principal != null) {
@@ -57,25 +57,25 @@ public class MyPageController {
 		model.addAttribute("weather",weatherData[0]);
 		model.addAttribute("temperature",weatherData[1]);
 		model.addAttribute("weatherGu",weatherData[2]);
-
+		//
 		
 		return "mypage/mylist";
 		}else {
 			return "/index";
 		}
 	}
-
+	// 나의 게시글 불러오기 //
 	
-	// 나의 게시글 Ajax로 불러오기
+	// 나의 게시글 Ajax로 불러오기 //////////////////////////////////////////////
 	@GetMapping("myListAjax")
 	@ResponseBody
 	public ResponseEntity<List<BoardVO>> myListAjax(Principal principal, int pageNum) {
 		String username = principal.getName();
 		return new ResponseEntity<List<BoardVO>>(myPageService.selectMyBoardList(username, pageNum),HttpStatus.OK);
 	}
-
+	// 나의 게시글 Ajax로 불러오기 //
 	
-	// 쪽지함 페이지 이동
+	// 쪽지함 페이지 이동 ///////////////////////////////////////////
 	@GetMapping("myMessage")
 	public String myMessage(Model model, MemberVO vo, Principal principal) {
 		if (principal != null) {
@@ -96,62 +96,63 @@ public class MyPageController {
 			model.addAttribute("weather",weatherData[0]);
 			model.addAttribute("temperature",weatherData[1]);
 			model.addAttribute("weatherGu",weatherData[2]);
-	
+			//
+			
 			return "mypage/myMessage";
 		} else {
 			return "/index";
 		}
 	}
-
+	// 쪽지함 페이지 이동 //
 	
-	//쪽지 Ajax로 불러오기 
+	//쪽지 Ajax로 불러오기 //////////////////////////////////////////////
 	@GetMapping("myMessageAjax")
 	@ResponseBody
 	public ResponseEntity<List<MessageVO>> myMessageAjax(Principal principal, int pageNum) {
 		String username = principal.getName();
 		return new ResponseEntity<List<MessageVO>>(myPageService.selectMessageList(username, pageNum),HttpStatus.OK);
 	}
-
+	//쪽지 Ajax로 불러오기 //
 	
-	//미니쪽지 Ajax로 불러오기
+	//미니쪽지 Ajax로 불러오기 //////////////////////////////////////////////
 	@GetMapping("myMiniMessageAjax")
 	@ResponseBody
 	public ResponseEntity<List<MessageVO>> myMiniMessageAjax(Principal principal) {
 		String username = principal.getName();
 		return new ResponseEntity<List<MessageVO>>(myPageService.selectMiniMessageList(username),HttpStatus.OK);
 	}
+	//쪽지 Ajax로 불러오기 //
 
-
-	// 쪽지 Ajax로 답장하기
+	// 쪽지 Ajax로 답장하기 ///////////////////////////////////////////////////
 	@PostMapping("myMessageSendAjax")
 	@ResponseBody public void myMessageSendAjax(MessageVO vo){
 		vo.setReceiver(myPageService.selectFindReceiver(vo.getMno()));
 		myPageService.sendMessage(vo); 
 	}
-
+	// 쪽지 답장하기 //
 	
-	// 쪽지 Ajax로 유저 선택해서 보내기
+	// 쪽지 Ajax로 유저 선택해서 보내기 ///////////////////////////////////////////////////
 	@PostMapping("myMessageSendToUserAjax")
 	@ResponseBody public void myMessageSendToUserAjax(MessageVO vo){
 		myPageService.sendMessageToUser(vo);
 	}
-
+	// 쪽지 유저 선택해서 보내기 //
 	
-	// 쪽지 삭제 Ajax
+	// 쪽지 삭제 Ajax ///////////////////////////////////////////////////
 	@PostMapping("deleteMessageAjax")
 	@ResponseBody public void deleteMessageAjax(int mno){
 		myPageService.deleteMessage(mno);
 	}
-
+	// 쪽지 삭제 Ajax //
 	
-	// 쪽지 읽음 업데이트
+	// 쪽지 읽음 업데이트 /////////////////////////////////
 	@PostMapping("updateReadCheckAjax")
 	@ResponseBody public void updateReadCheck(int mno){
 		myPageService.updateReadCheck(mno);
 	}
-
+	// 쪽지 읽음 업데이트 //
 	  
-	// 1:1 문의 이동 
+	// 1:1 문의 이동 ///////////////////////////////////////////
 	@GetMapping("myQA")
 	public String myQA(Model model,MemberVO vo,Principal principal) {
 		if (principal != null) {
@@ -179,26 +180,26 @@ public class MyPageController {
 			return "/index";
 		}
 	}
-
+	// 1:1 문의 이동 //
 	
-	// 1:1 문의 Ajax로 불러오기 
+	// 1:1 문의 Ajax로 불러오기 //////////////////////////////////////////////
 	@GetMapping("myQAAjax")
 	@ResponseBody
 	public ResponseEntity<List<QAVO>> myQAAjax(Principal principal, int pageNum) {
 		String username = principal.getName();	
 		return new ResponseEntity<List<QAVO>>(myPageService.selectQAList(username, pageNum),HttpStatus.OK);
 	}
-
+	// 1:1문의 Ajax로 불러오기 //
 	
-	// 1:1 문의 올리기
+	// 1:1 문의 올리기 ////////////////////////////////////////////
 	@PostMapping("QASendAjax")
 	@ResponseBody public void QASend(QAVO qvo){
 		myPageService.insertQA(qvo); 
 	}
-
+	// 1:1 문의 올리기
 	
 	
-	// 비밀번호 변경 페이지 이동
+	// 비밀번호 변경 페이지 이동////////////////////////////////////////
 	@GetMapping("myPassword")
 	public String myPassword(Model model,Principal principal) {
 		if (principal != null) {
@@ -220,17 +221,17 @@ public class MyPageController {
 		}
 		return "/index";
 	}
-
+	// 비밀번호 변경 페이지 이동//
 	
 	
 	
 	
-	//유저 정보 수정 
+	//유저 정보 수정 //////////////////////////////////////
 	@PostMapping("updateUser")
 	public String profile(MemberVO vo, MultipartFile[] uploadFile, String isFileChanged, Principal principal) {
 		File file;
 		
-		String uploadFolder = "c://Project/seoulneighbor/seoulNeighbor/src/main/webapp/resources/img/mypage";
+		String uploadFolder = "c://project_workspace/SeoulTest/src/main/webapp/resources/img/mypage";
 		
 		UUID uuid = UUID.randomUUID();
 		
@@ -265,9 +266,9 @@ public class MyPageController {
 		myPageService.updateUser(vo); //데이터베이스 업데이트
 		return "redirect:/profile";
 	}
-
+	//유저 정보 수정 //
 	
-	//비밀번호 변경 
+	//비밀번호 변경 //////////////////////////////////////////////////
 	@PostMapping("changePassword")
 	public String changePassword(RedirectAttributes rttr, MemberVO vo, String changePw) {
 
@@ -284,7 +285,7 @@ public class MyPageController {
 
 
 	}
-
+	//비밀번호 변경//
 
 	
 }

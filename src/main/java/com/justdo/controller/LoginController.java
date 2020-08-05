@@ -31,27 +31,27 @@ public class LoginController {
 	private JavaMailSender mailSender;
 	private BCryptPasswordEncoder pwEncoder;
 	
-	// 메인 로그인 페이지로 이동
+	// 메인 로그인 페이지로 이동 //////////////////////////////////
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String mainLogin() {
 		// 로그인 실패시 LoginFailureHandler 작동
 		return "index";
 	}
-
+	// 메인 로그인 페이지로 이동 //
 	
-	// 서브 로그인 페이지로 이동
+	// 서브 로그인 페이지로 이동 //////////////////////////////////
 	@RequestMapping(value = "subLogin", method = RequestMethod.GET)
 	public String subLogin() {
 		return "/login/subLogin";
 	}
-
+	// 서브 로그인 페이지로 이동 //
 	
 	// 로그인 성공 - 목록 이동
 	@RequestMapping(value = "list", method = RequestMethod.POST)
 	public String loginSuccess(HttpSession session, HttpServletRequest request) {
 		return "board/list";
 	}
-
+	// 로그인 성공 - 목록 이동 //
 	
 	// 권한 없음 페이지로 이동 
     @RequestMapping(value = "access_denied", method = RequestMethod.GET)
@@ -59,15 +59,17 @@ public class LoginController {
         return "/login/access_denied";
     }
     
-    // 아이디/비밀번호 찾기 페이지로 이동 
+    
+    
+    // 아이디/비밀번호 찾기 페이지로 이동 //////////////////////////////
     @RequestMapping(value = "find_id_pw", method = RequestMethod.GET)
     public String find_id_pw() throws Exception {
     	return "/login/find_id_pw";
     }
-
+    // 아이디/비밀번호 찾기 페이지로 이동 //
     
     
-    // 아이디 찾기 form
+    // 아이디 찾기 form //////////////////////////////
     @RequestMapping(value = "find_id_form", method = RequestMethod.POST)
     @ResponseBody
     public String find_id_form(String email, Model model) throws Exception {
@@ -81,10 +83,10 @@ public class LoginController {
 		}
 
     }
-
+    // 아이디 찾기 form //
     
     @SuppressWarnings("unused")
-	// 비밀번호 찾기 form
+	// 비밀번호 찾기 form //////////////////////////////
 	@RequestMapping(value = "find_pw_form", method = RequestMethod.POST, produces = "application/text; charset=utf-8")
     @ResponseBody
     public String find_pw_form(String username, String email, Model model) throws Exception {
@@ -134,15 +136,7 @@ public class LoginController {
 						log.warn("비밀번호 변경 완료");
 						
 						try {
-							MimeMessage message = mailSender.createMimeMessage();
-							MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-							
-							messageHelper.setFrom(setfrom);
-							messageHelper.setTo(tomail);
-							messageHelper.setSubject(title);
-							messageHelper.setText(content);
-							
-							mailSender.send(message);
+							service.commonMailSender(setfrom, tomail, title, content);
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
@@ -155,5 +149,5 @@ public class LoginController {
 		}
 		return "end";
     }
- 
+    // 비밀번호 찾기 form //
 }

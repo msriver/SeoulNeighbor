@@ -41,7 +41,9 @@ public interface ReplyMapper {
 	public List<ReReplyVO> getReReplyList(@Param("cri") Criteria cri, @Param("bno") int bno);
 	
 	
-	//댓글 전체 개수 가져오기
+	//댓글 전체 개수 가져오기(페이징 처리를 위함)
 	public int getCountByBno(int bno);
 	
+	//tbl_board의 reply_count 가져오기
+	public int getReplyCount(int bno);
 }

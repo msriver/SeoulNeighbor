@@ -32,4 +32,6 @@ public interface ReplyService {
 	public List<ReReplyVO> getReList(Criteria cri, int bno);
 	
 	public int getReplyCount(int bno);
+	
+	public int getAllReplyCount(int bno);
 }

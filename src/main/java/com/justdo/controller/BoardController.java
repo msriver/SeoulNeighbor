@@ -3,6 +3,8 @@ package com.justdo.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +34,7 @@ import com.google.gson.JsonObject;
 import com.justdo.domain.BoardVO;
 import com.justdo.domain.Criteria;
 import com.justdo.domain.LikeVO;
+import com.justdo.domain.MemberVO;
 import com.justdo.domain.PageDTO;
 import com.justdo.domain.ReportVO;
 import com.justdo.security.CustomUserDetailsService;
@@ -53,8 +57,9 @@ public class BoardController {
 
 	// 목록 페이지 이동
 	@GetMapping("list")
-	public void list(Criteria cri, Model model, Principal principal) {
-
+	public String list(Criteria cri, Model model, Principal principal) {
+		
+		
 		model.addAttribute("locationlist", service.getLocationList(cri));
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(cri)));
@@ -81,6 +86,9 @@ public class BoardController {
 
 		// 로그인 확인 후 닉네임 넘기기
 		if (principal != null) {
+			
+
+			
 			String username = principal.getName();
 			model.addAttribute("member", loginService.loadInfoByUsername(username));
 
@@ -98,6 +106,8 @@ public class BoardController {
 		} else {
 			log.warn("로그인 하지 않았음!");
 		}
+		
+		return "board/list";
 	}
 
 	// 탭별로 게시글 가져오기
@@ -116,24 +126,21 @@ public class BoardController {
 
 	// 등록화면
 	@GetMapping("/register")
-	public String register(Model model, Principal principal) {
-		if (principal != null) {
-			String username = principal.getName();
-			model.addAttribute("member", myPageService.selectUser(username));
-			return "/board/register";
-		} else {
-			return "/login/subLogin";
-		}
+	@PreAuthorize("isAuthenticated()")
+	public String register(Model model, Principal principal, Criteria cri) {
+		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(cri)));
+		model.addAttribute("member", myPageService.selectUser(principal.getName()));
+		return "/board/register";
 	}
 
 	// 등록처리
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr) {
+	@PreAuthorize("isAuthenticated()")
+	public String register(BoardVO board, RedirectAttributes rttr, Criteria cri, Model model) throws UnsupportedEncodingException {
 		service.register(board);
-
+		
 		rttr.addFlashAttribute("result", board.getBno());
-
-		return "redirect:/";
+		return "redirect:/board/list?gu=" + URLEncoder.encode(cri.getGu(), "UTF-8");
 	};
 
 	// 상세보기
@@ -148,9 +155,9 @@ public class BoardController {
 		} catch (Exception e) {
 			return "/board/list";
 		}
-		System.out.println("vo출력");
-		System.out.println(vo);
-
+		
+		model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(cri)));
+		
 		HttpSession sessions = request.getSession();
 
 		// 비교하기 위해 새로운 쿠키
@@ -198,26 +205,44 @@ public class BoardController {
 
 	// 수정화면불러오기
 	@GetMapping("/modify")
-	public void modify(@RequestParam("bno") int bno, Model model) {
-		model.addAttribute("board", service.get(bno));
+	public String modify(@RequestParam("bno") int bno, Model model, Criteria cri, Principal principal) {
+
+		if (principal != null) {
+			String username = principal.getName();
+			MemberVO mvo =  myPageService.selectUser(username);
+			BoardVO bvo = service.get(bno);
+			if(mvo.getUserid().equals(bvo.getUserid())) {
+				model.addAttribute("member", mvo);
+				model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(cri)));
+				model.addAttribute("board", bvo);
+				return "/board/modify";
+			}else {
+				return "redirect:/";
+			}
+
+		} else {
+			return "/login/subLogin";
+		}
 	}
 
 	// 수정처리
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	@PreAuthorize("principal.username == #board.userid")
+	public String modify(BoardVO board, RedirectAttributes rttr, Criteria cri, Model model) throws UnsupportedEncodingException {
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/board/list";
+		return "redirect:/board/list?gu=" + URLEncoder.encode(cri.getGu(), "UTF-8");
 	}
 
 	// 삭제
 	@PostMapping("/remove")
-	public String remoce(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	@PreAuthorize("principal.username == #userid")
+	public String remoce(@RequestParam("bno") Long bno, RedirectAttributes rttr, Criteria cri, Model model) throws UnsupportedEncodingException {
 		if (service.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/board/list";
+		return "redirect:/board/list?gu=" + URLEncoder.encode(cri.getGu(), "UTF-8");
 	}
 
 	// 이미지업로드

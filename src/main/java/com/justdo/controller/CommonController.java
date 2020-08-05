@@ -8,16 +8,13 @@ import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.HashMap;
 
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.justdo.domain.BoardVO;
 import com.justdo.domain.Criteria;
 import com.justdo.domain.MemberVO;
 import com.justdo.security.CustomUserDetailsService;
@@ -58,18 +54,31 @@ public class CommonController {
 	 
 	// 메인 이동
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model,Principal principal) throws IOException {
+	public String home(Principal principal) throws IOException {
 		
 		// 로그인 한 상태일 때는 principal 정보 담아서 board/list로 전송
 		if (principal != null) {
 			String username = principal.getName();
 			String gu = loginService.loadLocationByUsername(username);
 			String encodedGu = URLEncoder.encode(gu, "UTF-8");
-			return "redirect:/board/list?gu="+encodedGu;
+
+			return "redirect:/board/list?gu=" + encodedGu;
 		}
 
 		
 		return "index";
+	}
+	
+	//비회원 입장 시 선택지역 쿠키 생성
+	@RequestMapping(value="/nonMember", method = RequestMethod.GET)
+	public String nonMemberEnter(@RequestParam("nonMemGu") String gu,  HttpServletResponse response) throws UnsupportedEncodingException {
+		Cookie selectGuCookie = new Cookie("selectGu", gu);
+		
+		response.addCookie(selectGuCookie);
+		
+		String encodedGu = URLEncoder.encode(gu, "UTF-8");
+		
+		return "redirect:/board/list?gu=" + encodedGu;
 	}
 	
 	
@@ -98,8 +107,6 @@ public class CommonController {
 	}
 	
 
-
-		
 	//회원가입 페이지 호출
 	@GetMapping("join")
 	public String joinForm() {
@@ -185,15 +192,7 @@ public class CommonController {
 		String content = String.format("%04d", randNumber);
 		
 		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			
-			messageHelper.setFrom(setfrom);
-			messageHelper.setTo(tomail);
-			messageHelper.setSubject(title);
-			messageHelper.setText(content);
-			
-			mailSender.send(message);
+			service.commonMailSender(setfrom, tomail, title, content);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

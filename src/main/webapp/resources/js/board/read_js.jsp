@@ -12,15 +12,10 @@ $(document).ajaxSend(function(e, xhr, options){
 var replyService = (function(){
 
 	
-	// 빠른 게시판 이동 ////////////////////////////////
-	$("#selectGu").change(function(){
-		location.href = "/board/list?gu="+$(this).val();
-	})
-	// 빠른 게시판 이동 //
+
 	
 //댓글 등록
 	function add(reply, callback, error) {
-		console.log("reply......");
 		
 		$.ajax({
 			type: "post",
@@ -42,7 +37,6 @@ var replyService = (function(){
 	
 	//대댓글 등록
 	function reAdd(reply, callback, error) {
-		console.log("reply......");
 		
 		$.ajax({
 			type: "post",
@@ -70,7 +64,6 @@ var replyService = (function(){
 		$.getJSON("/reply/pages/" + bno + "/" + page + ".json",
 				function(data) {
 			if(callback){
-				console.log(data);
 				callback(data);
 			}
 		}).fail(function(xhr, status, err) {
@@ -135,7 +128,57 @@ var replyService = (function(){
 
 
 	$(document).ready(function(){
-		//좋아요 눌렀는지 확인 ////////////////////////////
+		
+		var actionForm = $("#actionForm");
+		
+		// 목록,수정,삭제,등록 버튼
+		/* $("#listButton").click(function(){
+		   location.href = "/board/list";
+		});
+		
+		$("#modfiyButton").click(function(){
+		   location.href = "/board/modify?bno="+'${board.bno}';
+		});
+		
+		$("#deleteButton").click(function(){
+		   location.href = "/board/modify?bno="+'${board.bno}';
+		});
+		
+		$("#registerButton").click(function(){
+		   if('${member.userid}' == ""){
+		      alert("신고하려면 로그인 해주세요");
+		   }else{
+		      location.href = "/board/register";
+		   }
+		}); */
+		
+		$(".btn-box button").click(function(e){
+			e.preventDefault();
+			var thisid = $(this).attr('id');
+			console.log(thisid);
+			
+			if(thisid == 'listButton') {
+				actionForm.attr('action', '/board/list');
+			} else if(thisid == 'modfiyButton') {
+				actionForm.attr('action', "/board/modify?bno="+'${board.bno}');
+			} else if(thisid == 'deleteButton') {
+				actionForm.append('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />');
+				actionForm.attr('action', '/board/remove').attr('method', 'post').submit();
+			} else if(thisid == 'registerButton') {
+				actionForm.attr('action', '/board/list');
+			}
+			
+			actionForm.submit();
+		});
+
+		
+		// 빠른 게시판 이동
+		$("#selectGu").change(function(){
+			location.href = "/board/list?gu="+$(this).val();
+		})
+
+		
+		//좋아요 눌렀는지 확인
 		function likeCheck(){
 	            var form = {
  	            		bno: '${board.bno}',
@@ -299,21 +342,13 @@ var replyService = (function(){
 		//댓글목록 불러오기 함수
 		function showList(page) {
 			
-			console.log("show list " + page);
-			
 			var dataObj = {
 				bno : bnoValue, 
 				page : page || 1,
 			}
 			
-			console.log(dataObj);
-			
 			replyService.getList(dataObj, 
 			function(result) {
-				
-				console.log("replyCnt " + result.replyCount);
-				console.log("replyList " + result.replyList);
-				console.log("reReplyList : " +result.reReplyList);
 				
 				if(page == -1) {
 					pageNum = Math.ceil(result.replyCount/10.0);
@@ -324,6 +359,7 @@ var replyService = (function(){
 				
 				var str = "";	
 				
+				console.log("displayCommentCount : " +result.displayCommentCount);
 				
 				if(result.replyList == null || result.replyList.length == 0) {
 					replyList.html("");
@@ -437,7 +473,7 @@ var replyService = (function(){
 					$("#re-reply" + result.reReplyList[i].rno).append(re_str);
 				}
 				
-				
+				$("#replyCount").text("댓글 " + result.displayCommentCount);
 				showReplyPage(result.replyCount);
 			});
 		}
@@ -485,14 +521,20 @@ var replyService = (function(){
 			replyPaging.html(str);
 		}
 		
+		var blank_pattern = /^\s+|\s+$/g;
+		
 		//등록버튼을 눌렀을 시 (댓글 입력)
 		$("#replyBtn").on("click", function(e){
+			
+			var reply = $("#replyInput").val();
+			
 	    	if('${member.userid}' == ""){
 	    		alert("로그인 해주세요");
-	    	}
-	    	else{
+	    	} else if(!reply || reply.replace(blank_pattern, '') == "") {
+	    		alert("댓글을 입력 후 등록해주세요.");
+	    	} else{
 				var reply = {
-						reply : $("#replyInput").val(),
+						reply : reply,
 						replyer : replyer,
 						bno : bnoValue
 				};
@@ -502,53 +544,55 @@ var replyService = (function(){
 					showList(-1);
 				});
 	    	}
-
 		});
 		
 		//등록버튼을 눌렀을 시 (대댓글 입력)
 		replyList.on("click", ".re-reply-submit", function(e){
+			
+			var rno = $(this).data("what");
+			var r_reply = $("#re-replyInput"+rno).val();
+			
+			console.log(r_reply);
+			console.log(rno);
+			
 	    	if('${member.userid}' == ""){
 	    		alert("로그인 해주세요");
-	    	}
-	    	else{
-				var rno = $(this).data("what");
-				
+	    	} else if(!r_reply || r_reply.replace(blank_pattern, '') == "") {
+	    		alert("댓글을 입력하지 않았습니다.");
+	    	} else{
 				var re_reply = {
 					rno : rno,
-					r_reply : $("#re-replyInput"+rno).val(),
+					r_reply : r_reply,
 					r_replyer : replyer
 				};
 				
-				var rno = $(this).closest("div").data("rno");
 				var point = $("#point"+rno);
 				
 				replyService.reAdd(re_reply, function(result){
-					console.log("result");
 					showList(pageNum);
 					point.html("");
 					reReplyToggle = true;
 				});
 	    	}
+	    	
 
 		});
 		
 		//페이징 링크 눌렀을 시
 		replyPaging.on("click", "ul li a", function(e){
 			e.preventDefault();
-			console.log("page click");
 			
 			var targetPageNum = $(this).attr("href");
 			
-			console.log("targetPageNum : " + targetPageNum);
 			pageNum = targetPageNum;
 			showList(pageNum);
 		});
+		
 		//댓글달기 누를시 대댓글 입력 창 생성
 		replyList.on("click", ".re-reply-create", function(e){
 			var rno = $(this).closest("div").data("rno");
 			//var point = $(".re-reply-box");
 			var point = $("#point"+rno);
-			console.log(rno);
 			
 			var str = "";
 			str += '<div id="re-commentWrite">';
@@ -583,14 +627,10 @@ var replyService = (function(){
 					type : $(this).closest("div").data("type"),
 					exist : 0
 			};
-			console.log(data);
 			
 			//삭제하는 녀석이 type = 0 (댓글) 이고 댓글에 대댓글이 달려있을때
 			if(data.type == 0 && $("#re-reply"+data.no).children().length != 0){
 				 data.exist = 1;
-				console.log("얘는 대댓글이 달린 댓글이네");
-			} else {
-				console.log("대댓글이 없는 댓글이거나 대댓글이네");
 			}
 			
 			replyService.remove(data, function(deleteResult){
@@ -599,7 +639,7 @@ var replyService = (function(){
 			});
 		});
 		
-		//수정
+		//수정하기 누를 시 수정하는 입력칸
 		replyList.on("click", ".reply-update", function(e){
 			var rno = $(this).closest("div").data("rno");
 			var point = $(this).closest(".bg-white");
@@ -608,7 +648,6 @@ var replyService = (function(){
 			
 			var temp = $(this).parent().prev().children("p").text();
 			
-			console.log(temp);
 			var str = "";
 			str += '<div id="re-commentWrite">';
 			str += '	<div class="input-group mb-3">';
@@ -621,17 +660,23 @@ var replyService = (function(){
 			point.html(str);
 		});
 		
+		//수정처리
 		replyList.on("click", ".update-submit", function(e){
 			e.preventDefault();
 			var rno = $(this).data("what");
 			var type = $(this).data("type");
-			
+			var reply = $("#updateInput"+rno).val();
 			var point = $("#point"+rno);
+			
+			if(!reply || reply.replace(blank_pattern, '') == "") {
+	    		alert("댓글을 입력하지 않았습니다.");
+	    		return;
+	    	}
 			
 			//보낼 데이터
 			var data = {
 					no : rno,
-					reply : $("#updateInput"+rno).val()
+					reply : reply
 			};
 			replyService.update(data, type, function(result){
 				alert(result);

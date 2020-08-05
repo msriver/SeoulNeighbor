@@ -9,12 +9,16 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.justdo.domain.BoardVO;
 import com.justdo.domain.MemberVO;
 import com.justdo.mapper.BoardMapper;
 import com.justdo.mapper.commonMapper;
@@ -29,6 +33,7 @@ public class commonServiceImpl implements commonService {
 	
 	private commonMapper mapper;
 	private BoardMapper boardMapper;
+	private JavaMailSender mailSender;
 	
 	//로그인
 	@Override
@@ -448,6 +453,21 @@ public class commonServiceImpl implements commonService {
 	public String changePassword(String userid, String email, String userpw) {
 		mapper.updateNewPassword(userid, email, userpw);
 		return "true";
+	}
+
+
+	@Override
+	public void commonMailSender(String setfrom, String tomail, String title, String content) throws MessagingException {
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		 
+		messageHelper.setFrom(setfrom);
+		messageHelper.setTo(tomail);
+		messageHelper.setSubject(title);
+		messageHelper.setText(content);
+		
+		mailSender.send(message);
 	}
 
 }

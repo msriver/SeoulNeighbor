@@ -5,29 +5,6 @@ $(document).ready(function(){
 	var temp;
 	var typeoption;
     var keywordtext;
-	//제목 길이 길면 자르는 함수 ////////////////////////////
-	function cutTitle(){
-		var tempTitle = $(".smallList");
-		var tempLongTitle = $(".bigList");
-		var tempCutTitle;
-		
-	 	for(var i=0 ; i<tempTitle.length ; i++){
-			if($(tempTitle[i]).text().length > 15){
-				tempCutTitle = $(tempTitle[i]).text().substring(0,16) + "...";
-				$(tempTitle[i]).text(tempCutTitle);
-			}
-		}
-	 	
-	 	for(var i=0 ; i<tempLongTitle.length ; i++){
-			if($(tempLongTitle[i]).text().length > 25){
-				tempCutTitle = $(tempLongTitle[i]).text().substring(0,25) + "...";
-				$(tempLongTitle[i]).text(tempCutTitle);
-			}
-		}
-	}
-	
-	cutTitle();
-	//제목 길이 길면 자르는 함수 //
 	
 	//서울 새소식 json 파싱 //////////////////////////////////
 	var newsInfo = ${newsInfo};
@@ -47,24 +24,36 @@ $(document).ready(function(){
 	
 	//서울 새소식 애니메이션/////////////////////////////
 	$(".newsDiv").hide();
-	$(".newsDiv:nth-child(2)").show();
+	$(".newsImageBox img").hide();
+	$(".newsDiv:nth(0)").show();
+	$(".newsImageBox img:nth(0)").show();
+	
 	function newsAnimation(){
 		setTimeout(function(){
-			$(".newsDiv:nth-child(2)").slideUp();
-			$(".newsDiv:nth-child(3)").slideDown(1000);
+			$(".newsDiv:nth(0)").slideUp();
+			$(".newsImageBox img:nth(0)").fadeOut();
+			$(".newsDiv:nth(1)").slideDown(1100);
+			$(".newsImageBox img:nth(1)").fadeIn(1000);
 			setTimeout(function(){
-				$(".newsDiv:nth-child(3)").slideUp();
-				$(".newsDiv:nth-child(4)").slideDown(1000);
+				$(".newsDiv:nth(1)").slideUp();
+				$(".newsImageBox img:nth(1)").fadeOut();
+				$(".newsDiv:nth(2)").slideDown(1100);
+				$(".newsImageBox img:nth(2)").fadeIn(1000);
 				setTimeout(function(){
-					$(".newsDiv:nth-child(4)").slideUp();
-					$(".newsDiv:nth-child(5)").slideDown(1000);
+					$(".newsDiv:nth(2)").slideUp();
+					$(".newsImageBox img:nth(2)").fadeOut();
+					$(".newsDiv:nth(3)").slideDown(1100);
+					$(".newsImageBox img:nth(3)").fadeIn(1000);
 					setTimeout(function(){
-						$(".newsDiv:nth-child(5)").slideUp();
-						$(".newsDiv:nth-child(6)").slideDown(1000);
+						$(".newsDiv:nth(3)").slideUp();
+						$(".newsImageBox img:nth(3)").fadeOut();
+						$(".newsDiv:nth(4)").slideDown(1100);
+						$(".newsImageBox img:nth(4)").fadeIn(1000);
 						setTimeout(function(){
-							$(".newsDiv:nth-child(6)").slideUp();
-							$(".newsDiv:nth-child(2)").slideDown(1000);
-							setTimeout(5000);
+							$(".newsDiv:nth(4)").slideUp();
+							$(".newsImageBox img:nth(4)").fadeOut();
+							$(".newsDiv:nth(0)").slideDown(1100);
+							$(".newsImageBox img:nth(0)").fadeIn(1000);
 						},5000)
 					},5000)
 				},5000)
@@ -72,12 +61,21 @@ $(document).ready(function(){
 		},5000)
 	}
 	
-	function startNewsAnimation(){
+ 	function startNewsAnimation(){
 		newsAnimation();
-		setInterval(newsAnimation,29000);
+		setInterval(newsAnimation,28000);
 	}
 	startNewsAnimation();
 	//서울 새소식 애니메이션//
+	
+	//문화공연 제목 길면 패딩 없애기 ////////////////////////
+	function longTitleNoPadding(){
+		if($($(".text-container").children(1)[0]).innerHeight() >= 54){
+			$(".text-container").css("padding","0");
+		}
+	}	
+	longTitleNoPadding();
+	//문화공연 제목 길면 패딩 없애기 //
 	
 
 	//하단 지역별 전체 소식 페이징/////////////////////////////
@@ -172,7 +170,6 @@ $(document).ready(function(){
   	                 
   	                 
   	                $(".pagination").html(str);
-  	                cutTitle(); //제목 길면 자름
   	              	activePage();
   	            },
   	            error: function(){
@@ -225,7 +222,6 @@ $(document).ready(function(){
   	                     
   	                     
   	                    $(".pagination").html(str);
-  	                    cutTitle(); //제목 길면 자름
   	                  	activePage();
   	                },
   	                error: function(){
@@ -276,7 +272,6 @@ $(document).ready(function(){
   	                     
   	                    
   	                    $(".pagination").html(str);
-  	                    cutTitle(); //제목 길면 자름
   	                  	activePage();
   	                },
   	                error: function(){
@@ -327,7 +322,6 @@ $(document).ready(function(){
   	                     
   	                     
   	                    $(".pagination").html(str);
-  	                    cutTitle(); //제목 길면 자름
   	                  	activePage();
   	                },
   	                error: function(){
@@ -377,7 +371,6 @@ $(document).ready(function(){
   	                 }
   	                 
   	                $(".pagination").html(str);
-  	                cutTitle(); //제목 길면 자름
   	              	activePage();
   	            },
   	            error: function(){
@@ -459,7 +452,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 activePage();
             },
             error: function(){
@@ -509,7 +501,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 activePage();
             },
             error: function(){
@@ -559,7 +550,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 activePage();
             },
             error: function(){
@@ -609,7 +599,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 activePage();
             },
             error: function(){
@@ -659,7 +648,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 activePage();
             },
             error: function(){
@@ -752,7 +740,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 firstActivePage();
             },
             error: function(){
@@ -802,7 +789,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 firstActivePage();
             },
             error: function(){
@@ -852,7 +838,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 firstActivePage();
             },
             error: function(){
@@ -902,7 +887,6 @@ $(document).ready(function(){
                  }
                  
                 $(".pagination").html(str);
-                cutTitle(); //제목 길면 자름
                 firstActivePage();
             },
             error: function(){

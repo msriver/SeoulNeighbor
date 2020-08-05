@@ -78,12 +78,8 @@
 
 	<!-- 조회 -->
 	<select id="read" resultType="com.justdo.domain.BoardVO">
-		select b.bno, b.userid, b.content, b.REGDATE, b.UPDATEDATE, b.REPLY_COUNT,
-		b.CATEGORY, b.LIKE_COUNT, b.UNLIKE_COUNT, b.LOCATION, b.VIEW_COUNT,
-		m.NICKNAME from TBL_BOARD b,TBL_MEMBER m where bno = #{bno} and
-		b.userid = m.userid
+		select * from TBL_BOARD where bno = #{bno}
 	</select>
-	
 	
 	<!-- 삭제 -->
 	<delete id="delete">
@@ -122,7 +118,7 @@
    
    <!-- 조회수 증가 -->
    <update id="updateViewCount">
-		update tbl_board set view_count = view_count + 1 where bno = #{bno}
+		update TBL_BOARD set view_count = view_count + 1 where bno = #{bno}
    </update>
    
    <!-- 글쓴이 프로필 사진 가져오기 -->
@@ -137,10 +133,10 @@
    
    <!-- 상세보기 인기글 -->
    <select id="selectHotListFromRead" resultType="com.justdo.domain.BoardVO">
-   		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+   		(select substring_index(location,'_',-1) as location, bno, title, category, reply_count,like_count 
 		from TBL_BOARD where location like concat('%',#{gu},'%') order by like_count desc limit 0,3)
 		UNION ALL
-		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+		(select substring_index(location,'_',-1) as location, bno, title, category, reply_count,like_count 
 		from TBL_BOARD where location like concat('%',#{gu},'%') order by reply_count desc limit 0,3)
    </select>
    

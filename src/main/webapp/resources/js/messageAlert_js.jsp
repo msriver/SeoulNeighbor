@@ -25,9 +25,6 @@ $(document).ready(function(){
 	           	}
 	           	isLinkChanged = false;
 	           	beforeCount = 0;
-	           },
-	           error: function(){
-	               alert("simpleWithObject err");
 	           }
 	       });
 	}
@@ -74,9 +71,6 @@ $(document).ready(function(){
 	                    "<a class='dropdown-item' href='/myMessage' style='background-color:white;color:black'>쪽지함 이동 <i class='fas fa-angle-right'></i></a>"
 				);
 	            cutContent();
-	        },
-	        error: function(){
-	            alert("simpleWithObject err");
 	        }
 	    });
 	}
@@ -122,9 +116,6 @@ $(document).ready(function(){
 	       },
 	       data: form,
 	       success: function(data){
-	       },
-	       error: function(){
-	           alert("simpleWithObject err");
 	       }
 	   });
 		
@@ -184,9 +175,6 @@ $(document).ready(function(){
 	           data: form,
 	           success: function(data){
 	           	alert("답장했습니다!");
-	           },
-	           error: function(){
-	               alert("simpleWithObject err");
 	           }
 	       });
 	})
@@ -254,14 +242,8 @@ $(document).ready(function(){
 	    	                	}
 	    	                });
 	    	                cutContent();
-	    	            },
-	    	            error: function(){
-	    	                alert("simpleWithObject err");
 	    	            }
 	    	        });
-	            },
-	            error: function(){
-	                alert("simpleWithObject err");
 	            }
 	        });
 		}

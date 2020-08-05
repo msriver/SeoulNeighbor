@@ -33,10 +33,8 @@ public class JoinValidator implements Validator {
 	//유효성 검사
 	@Override
 	public void validate(Object target, Errors errors) {
-		System.out.println("서버단 검증 시작합니다...");
 		MemberVO vo = (MemberVO) target;
 		
-		System.out.println("검증할 대상 : " + vo.toString());
 		
 		String userId = vo.getUserid();
 		String userPw = vo.getUserpw();
@@ -45,27 +43,22 @@ public class JoinValidator implements Validator {
 		String memberLocation = vo.getMember_location();
 		
 		if(userId == null || userId.trim().isEmpty() || !Pattern.matches(userIdRegExp, userId)) {
-			System.out.println("아이디가 비었거나 적절하지 않습니다.");
 			errors.rejectValue("userId", "trouble");
 		}
 		
 		if(userPw == null || userPw.trim().isEmpty() || !Pattern.matches(userPwRegExp, userPw)) {
-			System.out.println("비밀번호가 비었거나 적절하지 않습니다.");
 			errors.rejectValue("userPw", "trouble");
 		}
 		
 		if(nickName == null || nickName.trim().isEmpty() || !Pattern.matches(nickNameRegExp, nickName)) {
-			System.out.println("닉네임이 비었거나 적절하지 않습니다.");
 			errors.rejectValue("nickName", "trouble");
 		}
 		
 		if(email == null || email.trim().isEmpty() || !Pattern.matches(emailRegExp, email)) {
-			System.out.println("이메일이 비었거나 적절하지 않습니다.");
 			errors.rejectValue("email", "trouble");
 		}
 		
 		if(memberLocation == null || memberLocation.trim().isEmpty()) {
-			System.out.println("지역선택이 비었거나 적절하지 않습니다.");
 			errors.rejectValue("memberLocation", "trouble");
 		}
 		

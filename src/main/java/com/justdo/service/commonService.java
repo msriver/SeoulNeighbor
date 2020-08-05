@@ -2,6 +2,8 @@ package com.justdo.service;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
+
 import com.google.gson.JsonArray;
 import com.justdo.domain.BoardVO;
 import com.justdo.domain.MemberVO;
@@ -11,7 +13,6 @@ public interface commonService {
 	//로그인
 	public MemberVO login(MemberVO vo);
 
-	
 	//like좋아요
 	public int likeBoard(int bno);
 	
@@ -53,4 +54,7 @@ public interface commonService {
 	
 	//이메일과 아이디가 모두 맞는 회원의 비밀번호 변경하기
 	public String changePassword(String userid, String email, String userpw);
+	
+	//이메일 보내기 서비스
+	public void commonMailSender(String setfrom, String tomail, String title, String content) throws MessagingException;
 }

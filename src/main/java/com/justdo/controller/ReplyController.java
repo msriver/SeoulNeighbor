@@ -120,6 +120,9 @@ public class ReplyController {
 		map.put("replyCount", service.getReplyCount(bno));
 		map.put("replyList", service.getList(cri, bno));
 		map.put("reReplyList", service.getReList(cri, bno));
+		map.put("displayCommentCount", service.getAllReplyCount(bno));
+		
+		System.out.println(map);
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}

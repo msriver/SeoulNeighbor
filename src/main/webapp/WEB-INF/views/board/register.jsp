@@ -7,14 +7,14 @@
 1.1.1.2 동선택
 1.1.2 지도
 1.2 작성 폼
-1.2.1 카테고리 선택
+1.2.1 타이틀
+1.2.1.1 카테고리 선택
 1.3 취소버튼
 2. javaScript -->
 <!-- register.jsp -->
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +24,7 @@
 <link rel="stylesheet" href="/resources/css/mypage/profile-basic.css">
 <link rel="stylesheet" href="/resources/css/mypage/profile-formpage.css">
 <link rel="stylesheet" href="/resources/css/common/basic.css">
-<link rel="stylesheet" href="/resources/css/map/style.css">
-<link rel="stylesheet" href="/resources/css/board/register.css">
+<link rel="stylesheet" href="/resources/css/map/map.css">
 <link rel="stylesheet" href="/resources/css/board/style.css">
 <!-- include summernote css -->
 <link rel="stylesheet" type="text/css" href="/resources/css/summernote/summernote-lite.css">
@@ -38,14 +37,16 @@
 <!-- 1. 메인 ------------------------>
 	<main class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-xl-3">
 				<!-- 1.1 왼쪽 사이드 ------------------->
-				<div id="left_side">
+				<div id="leftside_wrap">
+					<h4>글 작성하기</h4>
 					<!-- 1.1.1 이름으로 지역선택 --------------->
-				<div id="name_choice">
+				<div id="gudongchoice_wrap">
 					<!-- 1.1.1.1 구선택 ------------->
 					<div class="dropdown">
-					    <button class="btn btn-primary dropdown-toggle" type="button" id="selectGu" data-toggle="dropdown">구
+						<input type="hidden" id="criteria_gu" name="criteria_gu" value="<c:out value='${criteria.gu}'/>">
+					    <button class="btn dropdown-toggle" type="button" id="selectGu" data-toggle="dropdown">구
 					    <span class="caret"></span></button>
 				    	<div id="gu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" href="#">강남구</a>
@@ -78,7 +79,7 @@
 					<!-- 1.1.1.1 구선택 -->
 					<!-- 1.1.1.2 동선택 ------------->
 					<div class="dropdown">
-					    <button class="btn btn-primary dropdown-toggle" type="button" id="selectDong" data-toggle="dropdown">동
+					    <button class="btn dropdown-toggle" type="button" id="selectDong" data-toggle="dropdown">동
 					    	<span class="caret"></span>
 					    </button>
 				    	<div id="dong" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -101,36 +102,52 @@
 				</div>
 				<!-- 1.1 왼쪽 사이드 -->		
 			</div>
-			<div class="col-md-9">
+			<div class="col-xl-9">
 				<!-- 1.2 작성 폼 ------------------>
 		        <form name="frm" role="form" action="/board/register" method="Post">
        				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		        	<!-- 1.2.1 카테고리 선택 -------->
-		        	<div class="dropdown" id="category_wrap">
-					    <button class="btn btn-primary dropdown-toggle" type="button" id="selectcategory" data-toggle="dropdown">카테고리
-					    	<span class="caret"></span>
-					    </button>
-					    <input type="hidden" id="category" name="category" value="<c:out value='${board.category}'/>">
-				    	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					    	<a class="dropdown-item" href="#">소통해요</a>
-					    	<a class="dropdown-item" href="#">불만있어요</a>
-					    	<a class="dropdown-item" href="#">모여요</a>
+       				<!-- 1.2.1 타이틀 ----------------------->
+       				<div id="title_wrap">
+	       				<!-- 1.2.1.1 카테고리 선택 -------->
+			        	<div class="dropdown" id="category_wrap">
+			        		<input type="hidden" id="category" name="category" value="<c:out value='${board.category}'/>">
+						    <button class="btn dropdown-toggle" type="button" id="selectcategory" data-toggle="dropdown">카테고리
+						    	<span class="caret"></span>
+						    </button>
+					    	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    	<a class="dropdown-item" href="#">소통해요</a>
+						    	<a class="dropdown-item" href="#">불만있어요</a>
+						    	<a class="dropdown-item" href="#">모여요</a>
+							</div>
 						</div>
-					</div>
-					<!-- 1.2.1 카테고리 선택 -->
-		            <input type="text" id="title" name="title" placeholder="제목"><br><!-- 글제목 -->  
+						<!-- 1.2.1.1 카테고리 선택 -->
+						<input type="text" id="title" name="title" placeholder="제목"><br><!-- 글제목 -->
+       				</div>
+       				<!-- 1.2.1 타이틀 -->
 		            <input type="hidden" name="userid" value="<c:out value='${member.userid}'/>"><!-- 유저아이디 -->
 		            <input type="hidden" name="nickname" value="<c:out value='${member.nickname}'/>"><!-- 유저아이디 -->
 					<textarea name="content" id="content" class="summernote" cols="80" rows="15"></textarea><br><!-- 글내용 -->
 					<input type="hidden" id="location" name="location" value="<c:out value='${member.member_location}'/>"><!-- 지역 -->
-					<button type="submit" class="btn btn-primary bottomButton" onclick="return boardCheck()">작성</button><!-- 작성버튼 -->
+					<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'> 
+					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+					<input type='hidden' name='gu' value='<c:out value="${criteria.gu}"/>'>
+					<button type="submit" id="register_btn" class="btn button-colored bottomButton" onclick="return boardCheck()">작성</button><!-- 작성버튼 -->
 		        </form>
 		        <!-- 1.2 수정 폼 -->
 		        <!-- 1.3 취소버튼 ----------->
 		        <form role="form" action="/board/list" method="get">
-		        	<button type="submit" class="btn btn-danger bottomButton">취소</button>
+		            <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'> 
+					<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+					<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
+					<input type='hidden' name='gu' value='<c:out value="${criteria.gu}"/>'>
+		        	<button type="submit" id="cancel_btn" class="btn button-gray bottomButton">취소</button>
 		        </form>
 	        	<!-- 1.3 취소버튼 -->
+	        	
+	        	
 			</div>
 		</div>
 	</main>

@@ -88,6 +88,13 @@ public class ReplyServiceImpl implements ReplyService {
 	public int getReplyCount(int bno) {
 		return mapper.getCountByBno(bno);
 	}
+	
+	//tbl_board의 reply_count 구하기
+	@Override
+	public int getAllReplyCount(int bno) {
+
+		return mapper.getReplyCount(bno);
+	}
 
 	
 }

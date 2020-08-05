@@ -81,7 +81,7 @@
 			<div class="modal-content">
         <!-- Modal Header -->
 				<div class="modal-header">
-				<h4 id="pictureHeader" class="modal-title">프로필 이미지 바꾸기</h4>
+				<h4 id="pictureHeader" class="modal-title">프로필 이미지 변경</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
         <!-- Modal body -->
