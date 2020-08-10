@@ -32,7 +32,7 @@
 					<label for="email">이메일</label> 
 					<input type="email" id="email" name="email" />
 					<div class="float-right pt-3 pb-1">
-						<button type="reset" class="btn button-gray onclick=" location.href='/subLogin'">취소</button>
+						<button type="reset" class="btn button-gray" onclick=" location.href='/subLogin'">취소</button>
 						<button id="id-find-button" class="btn button-colored">확인</button>
 					</div>
 				</div>
