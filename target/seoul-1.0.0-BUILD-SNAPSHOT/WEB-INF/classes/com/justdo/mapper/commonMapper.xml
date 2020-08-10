@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.justdo.mapper.commonMapper">
+
+	<select id="login" resultType="com.justdo.domain.MemberVO">
+		select * from TBL_MEMBER
+		where userid= #{userid} and userpw =#{userpw}
+	</select>
+	
+	<select id="selectBoard" resultType="com.justdo.domain.BoardVO">
+select b.bno, b.title , b.userid, b.content, b.REGDATE, b.UPDATEDATE, b.REPLY_COUNT, b.CATEGORY, b.LIKE_COUNT, b.UNLIKE_COUNT, b.LOCATION, b.VIEW_COUNT, m.NICKNAME from TBL_BOARD b,TBL_MEMBER m where bno = #{bno} and b.userid = m.userid
+	</select>
+	
+	<!-- tbl_member테이블에 가입정보 insert -->
+	<insert id="insertUser">
+		insert into TBL_MEMBER(userid, nickname, userpw, email, member_location)
+		values(#{userid}, #{nickname}, #{userpw}, #{email}, #{member_location})
+	</insert>
+	
+	<!-- tbl_member_auth테이블에 권한 추가 -->
+	<insert id="insertUserAuth">
+		insert into TBL_MEMBER_AUTH(userid, auth)
+		values(#{userid}, 'ROLE_USER');
+	</insert>
+	
+	<!-- id중복체크 -->
+	<select id="checkID" resultType="int">
+		select count(*) from TBL_MEMBER
+		where userid = #{userid}
+	</select>
+	
+	<!-- 닉네임 중복체크 -->
+	<select id="checkNickName" resultType="int">
+		select count(*) from TBL_MEMBER
+		where nickname = #{nickname}
+	</select>
+	
+	<!-- 이메일 중복체크 -->
+	<select id="checkEmail" resultType="int">
+		select count(*) from TBL_MEMBER
+		where email = #{email}
+	</select>
+	
+	<!-- 안읽은 메시지 개수 가져오기 -->
+	<select id="selectMessageReadCount" resultType="int">
+		select count(read_check = 'N') as noreadcount from TBL_MESSAGE where RECEIVER=#{userid} and read_check ='N';
+	</select>
+	
+	<!-- 날씨 정보 위한 회원 구 가져오기 -->
+	<select id="selectGuForWeather" resultType="String">
+		select substring_index(member_location,'_',1) as location from TBL_MEMBER where userid = #{userid}
+	</select>
+	
+	<!-- 이메일로 회원 아이디 찾기 -->
+	<select id="findID" resultType="String">
+		select userid from TBL_MEMBER where email = #{email}
+	</select>
+	
+	<!-- 아이디와 이메일이 맞는 비밀번호 변경하기 -->
+	<update id="updateNewPassword">
+		update TBL_MEMBER set userpw = #{userpw} where userid = #{userid} and email = #{email};
+	</update>
+</mapper>

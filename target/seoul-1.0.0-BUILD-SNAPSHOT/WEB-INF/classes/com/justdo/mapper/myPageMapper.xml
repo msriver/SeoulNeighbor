@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.justdo.mapper.myPageMapper">
+
+	<select id="selectUser" resultType="com.justdo.domain.MemberVO">
+		select * from TBL_MEMBER
+		where userid= #{id}
+	</select>
+	
+	<!-- 유저 정보 업데이트 -->
+	<update id="updateUser">
+		update TBL_MEMBER set
+		nickname = #{nickname},
+		member_location = #{member_location},
+		member_filename = #{member_filename}
+		where userid = #{userid}
+	</update>
+	
+	<!-- 원래 프로필파일 이름 가져오기 (기존 프로필 파일 삭제 위함) -->
+	<select id="getOriginalFileName" resultType="String">
+		select member_filename from TBL_MEMBER where userid = #{userid}
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePassword">
+		update TBL_MEMBER set
+		userpw = #{userpw}
+		where userid = #{userid}
+	</update>
+	
+	<!-- 쪽지함 가져오기 -->
+	<select id="selectMessageList" resultType="com.justdo.domain.MessageVO">	
+	select TBL_MEMBER.nickname, a.* from ((select mno,sender,receiver,message_content,read_check,date_format(writedate,'%Y/%m/%d')as writedate,count(*) as totalMessageNum 
+	from (TBL_MESSAGE) group by mno ) a ,TBL_MEMBER) where a.sender = TBL_MEMBER.userid and receiver=#{userid} order by mno desc limit #{pageNum},8;
+	</select>
+	
+	<!-- 미니 쪽지함 가져오기 -->
+	<select id="selectMiniMessageList" resultType="com.justdo.domain.MessageVO">	
+	select TBL_MEMBER.nickname, a.* from ((select mno,sender,receiver,message_content,read_check,date_format(writedate,'%Y/%m/%d')as writedate,count(*) as totalMessageNum 
+	from (TBL_MESSAGE) group by mno ) a ,TBL_MEMBER) where a.sender = TBL_MEMBER.userid and receiver=#{userid} order by mno desc limit 0,5;
+	</select>
+	
+	<!-- 쪽지 읽음 업데이트 -->
+	<update id="updateReadCheck">
+		update TBL_MESSAGE set read_check = 'Y' where mno = #{mno};
+	</update>
+	
+	<!-- 쪽지 총 개수 -->
+	<select id="selectCountMessage" resultType="int">
+		select count(*) from TBL_MESSAGE where receiver = #{userid}
+	</select>
+	
+	<!-- 쪽지 답장하기 -->
+	<insert id="sendMessage">
+		insert into TBL_MESSAGE (sender,receiver,message_content) values(#{sender},#{receiver},#{message_content})
+	</insert>
+	
+	<!-- 쪽지 사람 선택해서 보내기 -->
+	<insert id="sendMessageToUser">
+		insert into TBL_MESSAGE (sender,receiver,message_content) values(#{sender},(select userid from TBL_MEMBER where nickname = #{receiver}),#{message_content})
+	</insert>
+	
+	<!-- 쪽지 받는 사람 아이디 불러오기 -->
+	<select id="selectFindReceiver" resultType="String">
+		select sender from TBL_MESSAGE where mno = #{mno}
+	</select>
+	
+	<!-- 나의 게시글 불러오기 -->
+	<select id="selectMyBoardList" resultType="com.justdo.domain.BoardVO">
+		select bno,substring_index(location,'_',1) as location,title,category,like_count,date_format(regdate,'%Y/%m/%d')as regdate from TBL_BOARD where userid=#{userid} limit #{pageNum},8
+	</select>
+	
+	<!-- 나의 게시글 총 개수 -->
+	<select id="selectCountMyBoardList" resultType="int">
+		select count(*) from TBL_BOARD where userid = #{userid}
+	</select>
+	
+	<!-- 1:1 문의 불러오기 -->
+	<select id="selectQAList" resultType="com.justdo.domain.QAVO">
+		select qno,userid,q_content,q_title,q_check,date_format(q_regdate,'%Y/%m/%d')as q_regdate from TBL_QA where userid=#{userid} order by qno desc limit #{pageNum},8
+	</select>
+	
+	<!-- 1:1 문의 총 개수 -->
+	<select id="selectCountQAList" resultType="int">
+		select count(*) from TBL_QA where userid = #{userid}
+	</select>
+	
+	<!-- 1:1 문의 올리기 -->
+	<insert id="insertQA">
+		insert into TBL_QA(userid,q_content,q_title) values (#{userid},#{q_content},#{q_title})
+	</insert>
+	
+	<!-- 쪽지 삭제 -->
+	<delete id="deleteMessage">
+		delete from TBL_MESSAGE where mno = #{mno}
+	</delete>
+	
+	<!-- 비밀번호 수정 위한 비밀번호 가져오기 -->
+	<select id="selectUserPw" resultType="String">
+		select userpw from TBL_MEMBER where userid=#{userid}
+	</select>
+</mapper>

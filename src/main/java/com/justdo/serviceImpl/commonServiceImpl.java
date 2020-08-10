@@ -363,7 +363,7 @@ public class commonServiceImpl implements commonService {
         return weatherData;
 	}
 	
-	//문화정보 받아오기
+	//문화정보 받아오기 ////////////////////////////////
 	@SuppressWarnings("deprecation")
 	@Override
 	public String[] getCulture() throws IOException {
@@ -374,12 +374,12 @@ public class commonServiceImpl implements commonService {
         URL url = new URL(apiUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Content-type", "application/json; charset=utf-8");
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -399,10 +399,15 @@ public class commonServiceImpl implements commonService {
         int randInt = (int)((Math.random())*9);
 
         JsonObject tempCultureInfo = (JsonObject)parseItems.get(randInt);
-        String[] culutreInfo = {tempCultureInfo.get("TITLE").getAsString(),tempCultureInfo.get("DATE").getAsString(),tempCultureInfo.get("PLACE").getAsString(),tempCultureInfo.get("ORG_LINK").getAsString(),tempCultureInfo.get("MAIN_IMG").getAsString()};
+        String temp = tempCultureInfo.get("MAIN_IMG").getAsString();
+        if(temp.lastIndexOf("http")>0) {
+        	temp = temp.substring(temp.lastIndexOf("http"));
+        }
+        String[] culutreInfo = {tempCultureInfo.get("TITLE").getAsString(),tempCultureInfo.get("DATE").getAsString(),tempCultureInfo.get("PLACE").getAsString(),tempCultureInfo.get("ORG_LINK").getAsString(),temp};
 		return culutreInfo;
         
 	}
+	//문화 정보 받아오기//
 
 
 	//새소식 받아오기
@@ -416,12 +421,12 @@ public class commonServiceImpl implements commonService {
         URL url = new URL(apiUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Content-type", "application/json; charset=utf-8");
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
         }
         StringBuilder sb = new StringBuilder();
         String line;

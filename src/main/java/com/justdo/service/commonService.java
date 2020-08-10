@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.mail.MessagingException;
 
 import com.google.gson.JsonArray;
-import com.justdo.domain.BoardVO;
 import com.justdo.domain.MemberVO;
 
 public interface commonService {

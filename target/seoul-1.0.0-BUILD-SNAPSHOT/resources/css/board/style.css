@@ -1,0 +1,85 @@
+/* styles */
+h4 {
+	font-weight: bold !important;
+}
+
+#leftside_wrap {
+	position: relative;
+	margin: 70px 0px;
+}
+#gudongchoice_wrap{
+	position: relative;
+	float: left;
+	width: 100%;
+	margin: 20px 0px;
+}
+#selectGu{
+	float:left;
+	position: relative;
+	width:48%;
+	margin: 0px 2% 0px 0px;
+}
+#selectDong {
+	float: left;
+	position: relative;
+	width: 48%;
+	margin: 0px 0px 0px 2%;
+}
+.dropdown-menu {
+	max-height: 200px;
+  	overflow-y: auto;
+}
+.dropdown button {
+	border: 5px solid #E6E6E6;
+	color: #666666;
+}
+.board_notice {
+	font-size: 13px;
+	color: red;
+	text-align:center;
+}
+#gu_notice {
+	display: block;
+}
+#dong_notice {
+	display: none;
+}
+.map_wrap {
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 250px !important;
+	margin-top: 10px;
+}
+#title_wrap {
+	position: relative;
+	margin: 30px 0px;
+	height: 50px;
+}
+#category_wrap {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 19%;
+	margin-right: 2%;
+}
+#selectcategory {
+	width: 100%;
+}
+#title {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	padding-left: 10px;
+	border-bottom: 1px solid #E6E6E6;
+	width: 77%;
+	margin-left: 2%;
+}
+#content {
+	margin: 10px;
+}
+.bottomButton {
+	margin: 5px;
+	float: right;
+	width: 100px;
+}

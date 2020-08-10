@@ -48,23 +48,25 @@
 	
 	<!-- 댓글 목록 가져오기 -->
 	<select id="getListWithPaging" resultType="com.justdo.domain.ReplyVO">
-		select rno, bno, reply, replyer, replydate, updatedate,exist, TBL_MEMBER.member_filename
+		select rno, bno, reply,replydate, updatedate,exist, TBL_MEMBER.member_filename,
+		(select TBL_MEMBER.nickname from TBL_MEMBER where TBL_REPLY.replyer = TBL_MEMBER.userid) replyer
 		from TBL_REPLY, TBL_MEMBER
-		where bno = #{bno} and TBL_MEMBER.nickname = TBL_REPLY.replyer
+		where bno = #{bno} and TBL_REPLY.replyer = TBL_MEMBER.userid
 		order by rno asc
 		limit #{cri.startIndex}, #{cri.amount}
 	</select>
 	
 	<!-- 대댓글 가져오기 -->
 	<select id="getReReplyList" resultType="com.justdo.domain.ReReplyVO">
-		select rr.*, TBL_MEMBER.member_filename
+		select rr.r_rno,rr.r_reply,rr.rno,rr.r_replydate,rr.r_updatedate, TBL_MEMBER.member_filename,
+		(select nickname from TBL_MEMBER where rr.r_replyer = TBL_MEMBER.userid) r_replyer
 		from TBL_R_REPLY rr, (
 			select rno
 			from TBL_REPLY
 			where bno = #{bno}
 			limit #{cri.startIndex}, #{cri.amount}
 		) r,TBL_MEMBER
-		where rr.rno = r.rno and rr.r_replyer = TBL_MEMBER.NICKNAME;
+		where rr.rno = r.rno and rr.r_replyer = TBL_MEMBER.userid;
 	</select>
 	
 	<!-- 댓글 총 개수 가져오기 (페이징) -->

@@ -49,12 +49,14 @@ public class ReplyController {
 	}
 	
 	//댓글 한개 조회
+	@SuppressWarnings("deprecation")
 	@GetMapping(value="/{rno}" , produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno") int rno) {
 		return new ResponseEntity<ReplyVO>(service.get(rno), HttpStatus.OK);
 	}
 	
 	//댓글 삭제
+	@SuppressWarnings("deprecation")
 	@DeleteMapping(value="/delete/{no}/{type}/{exist}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("no") int no,@PathVariable("exist") int exist, @PathVariable("type") int type) {
 		
@@ -100,6 +102,7 @@ public class ReplyController {
 	}
 	
 	//댓글 목록 조회
+	@SuppressWarnings("deprecation")
 	@GetMapping(value = "/pages/{bno}/{page}",
 			produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE})
@@ -121,8 +124,6 @@ public class ReplyController {
 		map.put("replyList", service.getList(cri, bno));
 		map.put("reReplyList", service.getReList(cri, bno));
 		map.put("displayCommentCount", service.getAllReplyCount(bno));
-		
-		System.out.println(map);
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}

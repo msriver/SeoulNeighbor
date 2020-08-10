@@ -20,22 +20,24 @@
 	</sql>
 	<!-- 검색 기능 및 카테고리 정보에 따라 기존 구문에 추가되어 정보 불러옴 (end) -->
 	
-	<!-- 추천 및 인기글  목록 -->
-	<select id="getLocationList" resultType="com.justdo.domain.BoardVO">
-		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
-		from TBL_BOARD where location like concat('%',#{gu},'%') order by like_count desc limit 0,6)
-		UNION ALL
-		(select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
-		from TBL_BOARD where location like concat('%',#{gu},'%') order by reply_count desc limit 0,6)
-		UNION ALL
-		(select substring_index(location,'_',1) as location, bno, title, reply_count,like_count 
-		from TBL_BOARD order by reply_count desc limit 0,7);
-	</select>
-	<!-- 추천 및 인기글  목록 (end) -->
+   <!-- 추천 및 인기글  목록 -->
+   <select id="getLocationList" resultType="com.justdo.domain.BoardVO">
+      (select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+      from TBL_BOARD where location like concat('%',#{gu},'%') order by like_count desc limit 0,4)
+      UNION ALL
+      (select substring_index(location,'_',-1) as location, bno, title, reply_count,like_count 
+      from TBL_BOARD where location like concat('%',#{gu},'%') order by reply_count desc limit 0,4)
+      UNION ALL
+      (select substring_index(location,'_',1) as location, bno, title, reply_count,like_count 
+      from TBL_BOARD order by reply_count desc limit 0,4);
+   </select>
+   <!-- 추천 및 인기글  목록 (end) -->
 	
 	<!-- 하단 메인 게시글 목록 -->
 	<select id="getListWithPaging" resultType="com.justdo.domain.BoardVO">
-		select bno,userid,title,content,regdate,updatedate,reply_count,category,like_count,unlike_count,substring_index(location,'_',-1) as location,view_count,nickname from TBL_BOARD
+		select distinct bno,TBL_BOARD.userid,title,content,regdate,updatedate,reply_count,category,like_count,unlike_count,substring_index(location,'_',-1) as location,view_count,
+		(select nickname from TBL_MEMBER where TBL_BOARD.userid = TBL_MEMBER.userid) nickname
+		from TBL_BOARD, TBL_MEMBER
 		where (location LIKE CONCAT('%',#{gu},'%'))
 		order by bno desc
 		limit #{startIndex}, #{amount}
@@ -78,7 +80,9 @@
 
 	<!-- 조회 -->
 	<select id="read" resultType="com.justdo.domain.BoardVO">
-		select * from TBL_BOARD where bno = #{bno}
+		select bno,userid,title,regdate,updatedate,reply_count,like_count,unlike_count,view_count,content,category,location,
+		(select nickname from TBL_MEMBER where TBL_BOARD.userid = TBL_MEMBER.userid) nickname
+		from TBL_BOARD where bno = #{bno}
 	</select>
 	
 	<!-- 삭제 -->

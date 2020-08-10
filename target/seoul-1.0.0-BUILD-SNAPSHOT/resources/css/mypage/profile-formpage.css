@@ -1,0 +1,119 @@
+/* profile.jsp */
+
+/* form 디자인 *************************************/
+.content-box {
+	margin-top: 20px;
+	padding-left:20px;
+}
+
+h3:nth-child(n+4) {
+	margin-top: 20px;
+}
+
+#selectGu {
+	margin-bottom:5px;
+}
+
+#selectDong {
+	margin-bottom:5px;
+}
+
+#saveChangeBtn {
+	margin-top: 20px;
+	background-color:#827FFE ;
+	border-color:#827FFE ;
+	color:white;
+	float:right;
+}
+#saveChangeBtn:hover{
+	background-color:#6663db;
+}
+
+#profileChangeImgBox {
+	width: 200px;
+	padding: 15px;
+	border:none;
+}
+
+#profileChangeImgBox img {
+	width: 170px;
+}
+
+#searchPost{
+	width:fit-content;
+	background-color:#827FFE ;
+	border-color:#827FFE ;
+	color:white;
+}
+
+#searchPost:hover{
+	background-color:#6663db;
+}
+
+/* form 디자인 */
+
+/* 파일 업로드 디자인 *************************************/
+.filebox{
+	padding:0 !important;
+}
+
+.filebox label {
+	display: inline-block;
+	width:100%;
+	padding: .5em .75em;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+
+.filebox input[type="file"] { /* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+#uploadBtn{
+	background:rgba(0,0,0,0.7);
+	color:white;
+	border:none;
+	border-radius:0px !important;
+	margin-top:-55px;
+}
+
+/* 파일 업로드 디자인 */
+
+/* profile.jsp */
+
+
+#dontEditEmail{
+	color:red; 
+	font-size:0.8rem; 
+	margin-left:90px;
+}
+/* myPassword.jsp */
+
+.row{
+	margin-bottom:20px;
+}
+
+#passwordChangeBtn{
+	background-color:#827FFE;
+	color:white;
+	float:right;
+}
+
+#passwordChangeBtn:hover{
+	background-color:#6663db;
+}
+

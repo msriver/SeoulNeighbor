@@ -1,0 +1,54 @@
+/* 배경  ////////////////////////////////////////////*/
+.container {
+  min-height: 90vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); 
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.container::before {
+  background-image: url("../../img/mypage/profile_background.png");
+  background-repeat: no-repeat;
+  background-size:contain;
+  opacity: 0.6;
+  
+  position: fixed;
+  top: 60%;
+  left: 0;
+  
+  width: 100%;
+  height: 120%;
+  
+  content: "";
+  display: block;
+  z-index: -1;
+  /* pointer-events: none; */
+}
+
+/* 배경  */
+
+/* font *********************************/
+@font-face { font-family: 'BBTreeGB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+/* font */
+
+#rightDiv{
+	margin-top:20px;
+	height: 10px;
+}
+
+#rightDivContent{
+	margin-left:0;
+	height: 700px;
+}
+
+.label{
+	line-height:38px;
+	width:70px;
+	float:left;
+}

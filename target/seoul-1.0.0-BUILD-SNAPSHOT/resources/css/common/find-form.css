@@ -1,0 +1,99 @@
+a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #999 !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+a:focus, a:active {
+  text-decoration: none;
+  outline: none;
+  transition: all 300ms ease 0s;
+  -moz-transition: all 300ms ease 0s;
+  -webkit-transition: all 300ms ease 0s;
+  -o-transition: all 300ms ease 0s;
+  -ms-transition: all 300ms ease 0s; }
+
+input, select, textarea {
+  outline: none;
+  appearance: unset !important;
+  -moz-appearance: unset !important;
+  -webkit-appearance: unset !important;
+  -o-appearance: unset !important;
+  -ms-appearance: unset !important; }
+  
+body  {
+  width: 100%;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.92;
+  color: #222;
+  font-weight: 500;
+  font-family: 'Poppins';
+  margin: 0px;
+  background-image: -moz-linear-gradient(0deg, #d9afd9 0%, #5a2170 0%, #a1c4fd 0%, #c2e9fb 100%);
+  background-image: -webkit-linear-gradient(0deg, #d9afd9 0%, #5a2170 0%, #a1c4fd 0%, #c2e9fb 100%);
+  background-image: -ms-linear-gradient(0deg, #d9afd9 0%, #5a2170 0%, #a1c4fd 0%, #c2e9fb 100%); }
+
+.main {
+  padding: 195px 0; }
+
+.container {
+  overflow: auto;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px !important;
+  background: #fff;
+  box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.15);
+  -o-box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.15);
+  -ms-box-shadow: 0px 3px 9.5px 0.5px rgba(0, 0, 0, 0.15); }
+
+.nav-tabs li {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-tabs li:hover {
+  background-color: #ddd;
+}
+
+.nav-tabs li.active {
+  background-color: #827FFE;
+}
+
+input {
+  width: 100%;
+  height: 50px;
+  position: relative;
+  background-color: #e6e6e6;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+input:focus {
+  visibility: visible;
+  opacity: 1;
+}
+  
+.form-row {
+  margin: 0 -15px; }
+
+.form-group, .form-select {
+  width: 50%;
+  padding: 0 15px;
+  margin-bottom: 15px; }
+
+.form-group {
+  padding-bottom: 20px;
+  position: relative; }

@@ -2,7 +2,6 @@ package com.justdo.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.justdo.domain.BoardVO;
 import com.justdo.domain.MemberVO;
 
 public interface commonMapper {

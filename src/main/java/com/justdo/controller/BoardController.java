@@ -103,8 +103,6 @@ public class BoardController {
 			model.addAttribute("temperature", weatherData[1]);
 			model.addAttribute("weatherGu", weatherData[2]);
 
-		} else {
-			log.warn("로그인 하지 않았음!");
 		}
 		
 		return "board/list";
@@ -175,7 +173,6 @@ public class BoardController {
 			model.addAttribute("board", vo);
 			model.addAttribute("fileName", service.selectWriterProfile(vo.getNickname()));
 			model.addAttribute("hotList", service.selectHotListFromRead(cri));
-			System.out.println(service.selectHotListFromRead(cri));
 			if (principal != null) {
 				String username = principal.getName();
 				model.addAttribute("member", myPageService.selectUser(username));
@@ -211,6 +208,18 @@ public class BoardController {
 			String username = principal.getName();
 			MemberVO mvo =  myPageService.selectUser(username);
 			BoardVO bvo = service.get(bno);
+			
+			// 날씨 정보 불러오는 구문 /////////////////////
+			String weatherData[] = null;
+			try {
+				weatherData = commonService.getWeather(commonService.selectGuForWeather(principal.getName()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			model.addAttribute("weather", weatherData[0]);
+			model.addAttribute("temperature", weatherData[1]);
+			model.addAttribute("weatherGu", weatherData[2]);
+			
 			if(mvo.getUserid().equals(bvo.getUserid())) {
 				model.addAttribute("member", mvo);
 				model.addAttribute("pageMaker", new PageDTO(cri, service.getTotal(cri)));
@@ -232,12 +241,12 @@ public class BoardController {
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/board/list?gu=" + URLEncoder.encode(cri.getGu(), "UTF-8");
+		return "redirect:/board/read/" +board.getBno() +"?gu="+ URLEncoder.encode(cri.getGu(), "UTF-8");
 	}
 
 	// 삭제
 	@PostMapping("/remove")
-	@PreAuthorize("principal.username == #userid")
+	@PreAuthorize("#loginid == #userid")
 	public String remoce(@RequestParam("bno") Long bno, RedirectAttributes rttr, Criteria cri, Model model) throws UnsupportedEncodingException {
 		if (service.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
@@ -252,7 +261,7 @@ public class BoardController {
 
 		JsonObject jsonObject = new JsonObject();
 
-		String fileRoot = "C:\\summernote_image\\"; // 저장될 외부 파일 경로
+		String fileRoot = "C:\\seoulneighbor\\board_image\\"; // 저장될 외부 파일 경로
 		String originalFileName = multipartFile.getOriginalFilename(); // 오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf(".")); // 파일 확장자
 

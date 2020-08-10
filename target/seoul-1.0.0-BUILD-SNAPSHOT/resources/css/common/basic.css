@@ -1,0 +1,161 @@
+/* font *********************************/
+@font-face { font-family: 'RecipeKorea'; src: url("/resources/font/RecipeKorea1.ttf")}
+@font-face { font-family: 'Spoqa-bold'; src: url("/resources/font/Spoqa Han Sans Bold.ttf")}
+@font-face { font-family: 'Spoqa-reg'; src: url("/resources/font/Spoqa Han Sans Regular.ttf")}
+
+h1, h2, h3, h4, h5, h6{
+	font-family:"RecipeKorea";
+}
+
+* {
+	font-family: "Spoqa-reg";
+}
+
+.font-recipe {
+	font-family:"RecipeKorea";
+}
+
+.font-spoqaB {
+	font-family: "Spoqa-bold";
+}
+
+/* font */
+/* font */
+
+.button-gray {
+	background-color: #E6E6E6 !important;
+	border-color: #E6E6E6 !important;
+}
+
+.button-gray:hover {
+	background-color: #c3c3c3!important;
+	border-color: #c3c3c3 !important;
+}
+
+.button-colored {
+	color: white !important;
+	background-color: #827FFE !important;
+	border-color: #827FFE !important;
+}
+
+.button-colored:hover {
+	background-color: #6965fe !important;
+	border-color: #6965fe !important;
+}
+
+/* 태그 기본 css ////////////////////////////////////////////*/
+
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+
+body, html {
+	height: 100%;
+}
+
+a {
+	font-size: 15px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+
+a:focus {
+	outline: none !important;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	margin: 0px;
+}
+
+p {
+	font-size: 15px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+}
+
+ul, li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+input {
+	outline: none;
+	border: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+input::-webkit-input-placeholder { color: #8f8fa1;}
+input:-moz-placeholder { color: #8f8fa1;}
+input::-moz-placeholder { color: #8f8fa1;}
+input:-ms-input-placeholder { color: #8f8fa1;}
+
+textarea::-webkit-input-placeholder { color: #8f8fa1;}
+textarea:-moz-placeholder { color: #8f8fa1;}
+textarea::-moz-placeholder { color: #8f8fa1;}
+textarea:-ms-input-placeholder { color: #8f8fa1;}
+
+label {
+  display: block;
+  margin: 0;
+}
+
+button {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+iframe {
+	border: none !important;
+}
+/* 태그 기본 css */
+
+/* 추가 스타일 적용  ////////////////////////////////////////////*/
+.add-border-top {
+  border-top: 1px solid;
+  border-top-color: #e6e6e6
+}
+
+.add-border-bottom {
+  border-top: 1px solid;
+  border-top-color: #e6e6e6
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-colored {
+  font-size: 15px;
+  color: #827ffe;
+  line-height: 1.4;
+}
+/* 추가 스타일 적용   */
