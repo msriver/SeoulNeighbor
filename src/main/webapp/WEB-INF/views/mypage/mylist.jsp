@@ -33,7 +33,7 @@
 		<!-- 1.1 왼쪽 메뉴 -->
 		<!-- 1.2 나의 게시글 레이아웃 ---------------------------------->
 			<div id="rightDiv" class="col-lg-9 p-5">
-				<h1>나의 게시글</h1>
+				<h4>나의 게시글</h4>
 				<div id="rightDivContent" class="wrap-table mt-5">
 					<table class="table text-center">
 						<thead>

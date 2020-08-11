@@ -73,7 +73,7 @@ sub login page
 			<!-- 1.2 비회원 입장 ------------------------------>
 				<div class="text-center pr-3 pl-3 pb-3">
 					<p class="mb-1">비회원으로 입장하시겠어요?</p>
-					<form action="/list">
+					<form action="/board/list">
 						<div class="row">
 							<div class="col-xl-8 pr-0">
 								<div class="form-row">

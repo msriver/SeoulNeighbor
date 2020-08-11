@@ -34,7 +34,7 @@
 		<!-- 1.1 왼쪽 메뉴 -->
 		<!-- 1.2 비밀번호 변경 레이아웃 ---------------------------------->
 			<div id="rightDiv" class="col-lg-9 p-5">
-				<h3>비밀번호 변경</h3>
+				<h4>비밀번호 변경</h4>
 				<div id="rightDivContent" class="container">
 					<form id="changePasswordForm" method="post" action="changePassword">
 					<div class="content-box">

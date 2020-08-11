@@ -37,7 +37,7 @@
 		<!-- 1.1 왼쪽 메뉴 -->
 		<!-- 1.2 쪽지함 레이아웃 ---------------------------------->
 			<div id="rightDiv" class="col-lg-9 p-5">
-				<h1>쪽지함</h1>
+				<h4>쪽지함</h4>
 				<div id="rightDivContent" class="container mt-5">
 				<div class="content-box">
 				<!-- 1.3 쪽지 내용 출력 부분 ------------------------------->
